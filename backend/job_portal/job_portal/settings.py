@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -178,3 +178,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+
+TWILIO_ACCOUNT_SID = 'ACb953c9138f87b5d8f777f5e45095c3b2'
+TWILIO_AUTH_TOKEN = '9099ab47222273f699230dec9ed8a3eb'
+TWILIO_SERVICE_SID= 'VAe172d653015190447b869d952f9fc605'

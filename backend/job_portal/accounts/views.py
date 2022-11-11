@@ -7,6 +7,13 @@ from rest_framework.request import Request
 from accounts.models import Account
 from seeker.models import SeekerProfile
 from recruiter.admin import RecruiterProfile
+from rest_framework.views import APIView
+from accounts.otp import send_otp,verify_otp
+from django.contrib.auth import authenticate
+from .token import create_jwt_pair_tokens
+
+
+
 # Create your views here.
 
 class SignUpView(generics.GenericAPIView):
@@ -32,10 +39,16 @@ class SignUpView(generics.GenericAPIView):
                 print('role is seeker')
                 user = Account.objects.get(email = email)
                 SeekerProfile.objects.create(seeker=user)
+                phone_number = data.get('phone_number')
+                send_otp(phone_number)
+                print('otp send')
             elif role == 'recruiter':
                 print('role is recruiter')
                 user = Account.objects.get(email=email)
                 RecruiterProfile.objects.create(recruiter=user)
+                phone_number = data.get('phone_number')
+                send_otp(phone_number)
+                print('otp send')
             else:
                 print('user role is not user and recruiter But base User Created!')
             response = {
@@ -48,4 +61,57 @@ class SignUpView(generics.GenericAPIView):
             return Response(data==serializer.errors , status=status.HTTP_400_BAD_REQUEST)
 
 
+class  Verify_otpView(APIView):
 
+    def post(self, request : Request):
+        data = request.data
+        check_otp = data.get('otp')
+        phone_number = data.get('phone_number')        
+        check = verify_otp(phone_number,check_otp)
+
+        if check:
+            user = Account.objects.get(phone_number = phone_number)
+            user.is_verified = True
+            user.save()
+
+            return Response(
+                {'Success':'User is verified'},status=status.HTTP_200_OK)
+        else:
+            return Response({'Failed':'User is Not verified'},status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class LoginView(APIView):
+    permission_classes =  [AllowAny]
+
+    def post(self , request:Request):
+        email = request.data.get('email')
+        password = request.data.get('password') 
+        user = authenticate(request, email=email, password=password)
+
+
+        if user is not None:        
+            tokens = create_jwt_pair_tokens(user) 
+            profile = {}      
+
+            if user.role == 'seeker':
+                profile = SeekerProfile.objects.get(seeker=user)
+            elif user.role == 'recruiter':
+                profile = RecruiterProfile.objects.get(recruiter=user)
+
+            response = {
+                "message": "Login successfull",
+                "token": tokens,
+                "user" : {
+                    "user_id":user.id,
+                    "email":user.email,
+                    "role":user.role,
+                    'profile_id':profile.id
+                }
+            } 
+            
+            return Response(data=response, status=status.HTTP_200_OK)
+        else:
+            return Response(data={
+                "message": "Invalid email or password!"
+            }, status=status.HTTP_400_BAD_REQUEST)
