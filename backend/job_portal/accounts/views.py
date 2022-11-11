@@ -47,8 +47,8 @@ class SignUpView(generics.GenericAPIView):
                 user = Account.objects.get(email=email)
                 RecruiterProfile.objects.create(recruiter=user)
                 phone_number = data.get('phone_number')
-                send_otp(phone_number)
-                print('otp send')
+                # send_otp(phone_number)
+                # print('otp send')
             else:
                 print('user role is not user and recruiter But base User Created!')
             response = {
