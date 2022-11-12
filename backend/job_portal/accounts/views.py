@@ -40,11 +40,13 @@ class SignUpView(generics.GenericAPIView):
                 user = Account.objects.get(email = email)
                 SeekerProfile.objects.create(seeker=user)
                 phone_number = data.get('phone_number')
-                send_otp(phone_number)
-                print('otp send')
+                # send_otp(phone_number)
+                # print('otp send')
             elif role == 'recruiter':
                 print('role is recruiter')
                 user = Account.objects.get(email=email)
+                user.is_staff = True
+                user.save()
                 RecruiterProfile.objects.create(recruiter=user)
                 phone_number = data.get('phone_number')
                 # send_otp(phone_number)
