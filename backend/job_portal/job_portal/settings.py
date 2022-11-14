@@ -128,6 +128,15 @@ AUTH_USER_MODEL = 'accounts.Account'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+CORS_ORIGIN_ALLOW_ALL = True
+APPEND_SLASH=False
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://localhost:8080',
+]
+
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
