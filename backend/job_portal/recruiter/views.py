@@ -14,4 +14,3 @@ class CompanyView(ModelViewSet):
 class RecruiterProfileView(ModelViewSet):
     queryset = RecruiterProfile.objects.all()
     serializer_class = RecruiterProfileSerializer
-    

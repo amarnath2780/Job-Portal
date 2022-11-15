@@ -14,7 +14,8 @@ class Company(models.Model):
     ceo_name = models.CharField(max_length=200, blank=True)
     ceo_image = models.ImageField(upload_to=f'media/{company_name}/ceo', blank=True)
     head_office_location = models.CharField(max_length=200, blank=True)
-    secutity_code = models.CharField(max_length=200 , blank =True)
+    security_code = models.CharField(max_length=100)
+
 
     def __str__(self):
         return self.company_name
@@ -31,3 +32,31 @@ class RecruiterProfile(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+
+
+class Application(models.Model):
+
+    STATUS = [
+        ('Pending', 'Pending'),
+        ('Approved' , 'Approved'),
+        ('Rejected' ,  'Rejected'),
+
+    ]
+
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length = 200)
+    email = models.CharField(max_length=200)
+    phone = models.IntegerField()
+    recruiter = models.ForeignKey(Account , on_delete=models.CASCADE)
+    company = models.ForeignKey(Company , on_delete=models.CASCADE)
+    city  = models.CharField(max_length=100 , blank=True)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=200)
+    status = models.CharField(default='Pending',choices=STATUS,max_length=300,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+
+    def __str__(self):
+        return self.first_name

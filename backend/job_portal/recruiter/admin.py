@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RecruiterProfile , Company
+from .models import RecruiterProfile , Company, Application
 
 # Register your models here.
 
@@ -11,3 +11,8 @@ class RecruiterProfileAdmin(admin.ModelAdmin):
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ['company_name', 'id', 'founder', 'ceo_name', 'head_office_location']
+
+
+@admin.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ['first_name' , 'company' , 'status']
