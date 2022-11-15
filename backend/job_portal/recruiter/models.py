@@ -14,9 +14,12 @@ class Company(models.Model):
     ceo_name = models.CharField(max_length=200, blank=True)
     ceo_image = models.ImageField(upload_to=f'media/{company_name}/ceo', blank=True)
     head_office_location = models.CharField(max_length=200, blank=True)
+    secutity_code = models.CharField(max_length=200 , blank =True)
 
     def __str__(self):
         return self.company_name
+
+
 
 
 
