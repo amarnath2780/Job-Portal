@@ -30,6 +30,8 @@ class SignUpView(generics.GenericAPIView):
         role = request.data.get('role')
         email = request.data.get('email')
 
+        
+
         if serializer.is_valid():
             serializer.save()
             
@@ -68,6 +70,7 @@ class  Verify_otpView(APIView):
     def post(self, request : Request):
         data = request.data
         check_otp = data.get('otp')
+
         phone_number = data.get('phone_number')        
         check = verify_otp(phone_number,check_otp)
 
@@ -91,6 +94,7 @@ class LoginView(APIView):
         password = request.data.get('password') 
         user = authenticate(request, email=email, password=password)
 
+        
 
         if user is not None:        
             tokens = create_jwt_pair_tokens(user) 
