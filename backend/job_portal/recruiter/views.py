@@ -9,8 +9,14 @@ from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-
+from superuser.models import CompanyCategory
+from superuser.serializers import CompanyCategorySerializer
 # Create your views here.
+
+
+class CompanyCategoryView(ModelViewSet):
+    queryset = CompanyCategory.objects.all()
+    serializer_class = CompanyCategorySerializer
 
 
 class CompanyView(ModelViewSet):
@@ -45,10 +51,8 @@ class ApplicationView(APIView):
         users = request.data.get('email')
 
         recruiter = Account.objects.get(email =users)
-        print(recruiter.id)
         request.data['recruiter'] = recruiter.id
         company = Company.objects.get(id=comapny_id)
-        print(f'code{company.security_code}')
 
         if company.security_code == security_code:
             if serilizer.is_valid():
