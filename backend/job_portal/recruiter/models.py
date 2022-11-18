@@ -12,7 +12,6 @@ class Company(models.Model):
     about = models.TextField(max_length=3000, blank=True)
     founder = models.CharField(max_length=200, blank=True)
     ceo_name = models.CharField(max_length=200, blank=True)
-    ceo_image = models.ImageField(upload_to=f'media/{company_name}/ceo', blank=True)
     head_office_location = models.CharField(max_length=200, blank=True)
     security_code = models.CharField(max_length=100)
 
@@ -49,8 +48,8 @@ class Application(models.Model):
     last_name = models.CharField(max_length = 200)
     email = models.CharField(max_length=200)
     phone = models.IntegerField()
-    recruiter = models.OneToOneField(Account , on_delete=models.CASCADE , blank=True )
-    company = models.ForeignKey(Company , on_delete=models.CASCADE,  blank=True)
+    recruiter = models.ForeignKey(Account , on_delete=models.CASCADE , blank=True )
+    company = models.OneToOneField(Company , on_delete=models.CASCADE,  blank=True)
     city  = models.CharField(max_length=100 , blank=True)
     state = models.CharField(max_length=100)
     country = models.CharField(max_length=200)

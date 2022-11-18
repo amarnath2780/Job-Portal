@@ -25,13 +25,15 @@ class CompanyView(ModelViewSet):
 
 
 class CompanyAddView(APIView):
-    def post(self, request):
+    def post(self, request:Response):
         serilizer = CompanySerializer(data = request.data)
+        
         if serilizer.is_valid():
+            print('serilizer is valid')
             serilizer.save()
             return Response({'message' : "company add successfully"} , status=status.HTTP_200_OK)
         else:
-            print('serilzer is valid')
+            print('serilzer is not valid')
             print(serilizer.errors)
             return Response({'message' : 'Details is not valid'} , status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,7 +65,7 @@ class ApplicationView(APIView):
                 return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
         else:
             print('security code not valid')
-            return Response({'message' : 'Security Code Not Valid'} , status=status.HTTP_400_BAD_REQUEST )
+            return Response({'message' : 'Company already exists'} , status=status.HTTP_400_BAD_REQUEST )
 
 class ListCompanyView(ModelViewSet):
     queryset = Company.objects.all()
