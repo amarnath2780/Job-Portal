@@ -72,3 +72,10 @@ class ListCompanyView(ModelViewSet):
     serializer_class = CompanySerializer
 
 
+class ApplyedView(ModelViewSet):
+    queryset = Application.objects.all()
+    serializer_class = ApplicationSerializer
+
+
+    def get_queryset(self):
+        return super().get_queryset().filter(recruiter=self.request.user.id)
