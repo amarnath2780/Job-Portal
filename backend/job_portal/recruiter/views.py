@@ -59,7 +59,7 @@ class ApplicationView(APIView):
         if company.security_code == security_code:
             if serilizer.is_valid():
                 serilizer.save()
-                return Response({'message' : "created successfully" } , status=status.HTTP_200_OK)
+                return Response({'message' : "created successfully"  }, status=status.HTTP_200_OK)
             else:
                 print('serilzer not valid')
                 return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
@@ -72,10 +72,19 @@ class ListCompanyView(ModelViewSet):
     serializer_class = CompanySerializer
 
 
-class ApplyedView(ModelViewSet):
-    queryset = Application.objects.all()
-    serializer_class = ApplicationSerializer
+class ApplyedView(APIView):
 
+    def get(self, request ,*awags , **kawags):
 
-    def get_queryset(self):
-        return super().get_queryset().filter(recruiter=self.request.user.id)
+        try:
+            id = request.query_params['id']
+            print(id)
+            application = Application.objects.filter(recruiter=id)
+
+            serializer = ApplicationSerializer(application , many=True)
+
+            return Response(data=serializer.data,status=status.HTTP_400_BAD_REQUEST)
+        except:
+            print(serializer.errors)
+            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)

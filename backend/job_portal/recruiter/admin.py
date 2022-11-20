@@ -15,4 +15,4 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ['first_name'  , 'status']
+    list_display = ['id','first_name'  , 'status']

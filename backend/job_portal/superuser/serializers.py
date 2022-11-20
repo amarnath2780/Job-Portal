@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CompanyCategory ,CompanyDepartment,Skill
+from .models import CompanyCategory ,CompanyDepartment,Skill , AdminProfile
 
 
 
@@ -18,4 +18,11 @@ class CompanyDepartmentSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
+        fields = '__all__'
+
+
+class AdminProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AdminProfile
         fields = '__all__'

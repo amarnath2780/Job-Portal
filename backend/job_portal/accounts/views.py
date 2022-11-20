@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import SignUpSerializer
+from .serializers import SignUpSerializer, UserViewSerializer
 from rest_framework.permissions import  AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,6 +7,7 @@ from rest_framework.request import Request
 from accounts.models import Account
 from seeker.models import SeekerProfile
 from recruiter.admin import RecruiterProfile
+from superuser.models import AdminProfile
 from rest_framework.views import APIView
 from accounts.otp import send_otp,verify_otp
 from django.contrib.auth import authenticate
@@ -92,11 +93,13 @@ class LoginView(APIView):
     def post(self , request:Request):
         email = request.data.get('email')
         password = request.data.get('password') 
+        print(email,password)
         user = authenticate(request, email=email, password=password)
 
-        
+        print(f'user is {user}')
 
         if user is not None:        
+            print('authenticatied')
             tokens = create_jwt_pair_tokens(user) 
             profile = {}      
 
@@ -104,6 +107,8 @@ class LoginView(APIView):
                 profile = SeekerProfile.objects.get(seeker=user)
             elif user.role == 'recruiter':
                 profile = RecruiterProfile.objects.get(recruiter=user)
+            else:
+                profile = AdminProfile.objects.get(admin=user)
 
             response = {
                 "message": "Login successfull",
@@ -121,3 +126,10 @@ class LoginView(APIView):
             return Response(data={
                 "message": "Invalid email or password!"
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class UserView(generics.RetrieveAPIView):
+    permission_classes = []
+    serializer_class = UserViewSerializer
+    queryset = Account.objects.all()

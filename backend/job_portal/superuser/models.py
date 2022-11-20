@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import Account
 
 
 class CompanyCategory(models.Model):
@@ -23,3 +24,7 @@ class Skill(models.Model):
     def __str__(self):
         return self.skill_name
 
+class AdminProfile(models.Model):
+    admin = models.ForeignKey(Account , on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.id)
