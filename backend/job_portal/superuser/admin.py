@@ -9,7 +9,7 @@ class CompanyCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(CompanyDepartment)
 class CompanyDepartmentAdmin(admin.ModelAdmin):
-    list_display = ['department_name', 'category']
+    list_display = ['id','department_name', 'category']
 
 
 @admin.register(Skill)

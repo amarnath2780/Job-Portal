@@ -12,7 +12,7 @@ class CompanyCategorySerializer(serializers.ModelSerializer):
 class CompanyDepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyDepartment
-        field = '__all__'
+        fields = '__all__'
 
 
 class SkillSerializer(serializers.ModelSerializer):
