@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import CompanyCategory, Skill , CompanyDepartment
-from .serializers import CompanyCategorySerializer , SkillSerializer ,CompanyDepartmentSerializer
+from .models import CompanyCategory, Skill , CompanyDepartment , CompanyCategory
+from .serializers import CompanyCategorySerializer , SkillSerializer ,CompanyDepartmentSerializer , CompanyCategorySerializer
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -21,6 +21,23 @@ class ListSkillView(ModelViewSet):
 class ListCompanyDepartmentView(ModelViewSet):
     queryset = CompanyDepartment.objects.all()
     serializer_class = CompanyDepartmentSerializer
+
+class ListCompanyCategoryView(ModelViewSet):
+    queryset = CompanyCategory.objects.all()
+    serializer_class = CompanyCategorySerializer
+
+class CategoryAddView(APIView):
+
+    def post(self , request:Response):
+        serializer = CompanyCategorySerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':' added Successfully'} , status=status.HTTP_200_OK)
+        else:
+            print('serializer is not valid')
+            print(serializer.errors)
+            return Response({'message' : 'Category is invalid '} , status=status.HTTP_400_BAD_REQUEST)
 
 
 class SkillAddView(APIView):

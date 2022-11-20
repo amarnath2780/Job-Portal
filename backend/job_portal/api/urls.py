@@ -2,7 +2,7 @@ from django.urls import path,include
 from recruiter.views import ApplicationView , CompanyAddView , CompanyView , ListCompanyView ,CompanyCategoryView, ApplyedView,RecruiterProfileView
 from rest_framework import routers
 from accounts.views import SeekerView , RecruiterView
-from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView
+from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -13,6 +13,7 @@ router.register(r'view-seeker', SeekerView, basename='seekers')
 router.register(r'view-recruiters', RecruiterView , basename='recruiters-list')
 router.register(r'list-skills', ListSkillView , basename='list-skills')
 router.register(r'list-department', ListCompanyDepartmentView , basename='list-department')
+router.register(r'list-category', ListCompanyCategoryView , basename='list-department')
 
 
 urlpatterns = [
@@ -22,6 +23,7 @@ urlpatterns = [
     path('view-app/', ApplyedView.as_view() , name="applied-view"),
     path('view-app/', ApplyedView.as_view() , name="applied-view"),
     path('add-skill/' , SkillAddView.as_view() , name='add-skill'),
+    path('add-category/' , CategoryAddView.as_view() , name='add-category'),
 ]
 
 urlpatterns += router.urls
