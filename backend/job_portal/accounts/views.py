@@ -139,3 +139,8 @@ class UserView(generics.RetrieveAPIView):
 class SeekerView(ModelViewSet):
     queryset = Account.objects.filter(role='seeker')
     serializer_class = UserViewSerializer
+
+
+class RecruiterView(ModelViewSet):
+    queryset = Account.objects.filter(role='recruiter')
+    serializer_class = UserViewSerializer
