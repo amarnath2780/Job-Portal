@@ -4,7 +4,6 @@ from rest_framework.viewsets import ModelViewSet
 from accounts.models import Account
 from .models import Company, RecruiterProfile, Application
 from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer 
-from rest_framework.decorators import api_view,permission_classes
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated

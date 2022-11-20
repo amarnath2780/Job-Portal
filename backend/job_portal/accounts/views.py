@@ -8,7 +8,8 @@ from accounts.models import Account
 from seeker.models import SeekerProfile
 from recruiter.admin import RecruiterProfile
 from superuser.models import AdminProfile
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
+from rest_framework.viewsets import ModelViewSet
 from accounts.otp import send_otp,verify_otp
 from django.contrib.auth import authenticate
 from .token import create_jwt_pair_tokens
@@ -133,3 +134,8 @@ class UserView(generics.RetrieveAPIView):
     permission_classes = []
     serializer_class = UserViewSerializer
     queryset = Account.objects.all()
+
+
+class SeekerView(ModelViewSet):
+    queryset = Account.objects.filter(role='seeker')
+    serializer_class = UserViewSerializer
