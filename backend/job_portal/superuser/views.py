@@ -5,7 +5,9 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from recruiter.models import Application
+from recruiter.serializers import ApplicationSerializer
+from rest_framework.decorators import api_view, permission_classes
 # Create your views here.
 
 
@@ -52,3 +54,12 @@ class SkillAddView(APIView):
             print('serializer is not valid')
             print(serializer.errors)
             return Response({'message' : 'Skill is invalid '} , status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def edit_appA(request, id):
+    edit = Application.objects.get(id=id)
+    change = ApplicationSerializer(instance=edit, data=request.data)
+    if change.is_valid():
+        change.save()
+    return Response(change.data)
