@@ -28,6 +28,18 @@ class ListCompanyCategoryView(ModelViewSet):
     queryset = CompanyCategory.objects.all()
     serializer_class = CompanyCategorySerializer
 
+class PendingApp(ModelViewSet):
+    queryset = Application.objects.filter(status="Pending")
+    serializer_class = ApplicationSerializer
+
+class AccepetdView(ModelViewSet):
+    queryset = Application.objects.filter(status="Approved")
+    serializer_class = ApplicationSerializer
+
+class RejectedView(ModelViewSet):
+    queryset = Application.objects.filter(status="Rejected")
+    serializer_class = ApplicationSerializer
+
 class CategoryAddView(APIView):
 
     def post(self , request:Response):
@@ -55,11 +67,32 @@ class SkillAddView(APIView):
             print(serializer.errors)
             return Response({'message' : 'Skill is invalid '} , status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['PUT'])
 def edit_appA(request, id):
+    print(id)
     edit = Application.objects.get(id=id)
+    print(edit)
     change = ApplicationSerializer(instance=edit, data=request.data)
+    print(change)
     if change.is_valid():
+        print('chnage is valid')
         change.save()
-    return Response(change.data)
+        return Response({"message":"changed the data"},status=status.HTTP_200_OK)
+    else:
+        print (change.errors)
+        return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+class ChangeStatus(APIView):
+
+    def put(self , request:Response ,pk=None):
+        id = request.query_params['id']
+        print(id)
+        edit = Application.objects.get(id=id)
+        change = ApplicationSerializer(instance=edit, data=request.data)
+
+        if change.is_valid():
+            print('chnage is valid')
+            change.save()
+            return Response({"message":"changed the data"},status=status.HTTP_200_OK)
+        else:
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)

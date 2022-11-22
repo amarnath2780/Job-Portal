@@ -2,7 +2,7 @@ from django.urls import path,include
 from recruiter.views import ApplicationView , CompanyAddView , CompanyView , ListCompanyView ,CompanyCategoryView, ApplyedView,RecruiterProfileView
 from rest_framework import routers
 from accounts.views import SeekerView , RecruiterView
-from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView
+from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView
 from superuser.views import edit_appA
 
 router = routers.DefaultRouter()
@@ -15,6 +15,9 @@ router.register(r'view-recruiters', RecruiterView , basename='recruiters-list')
 router.register(r'list-skills', ListSkillView , basename='list-skills')
 router.register(r'list-department', ListCompanyDepartmentView , basename='list-department')
 router.register(r'list-category', ListCompanyCategoryView , basename='list-department')
+router.register(r'pending-app', PendingApp , basename='pending-app')
+router.register(r'accepted-app', AccepetdView , basename='acceped-app')
+router.register(r'rejected-app', RejectedView , basename='rejected-app')
 
 
 urlpatterns = [
@@ -26,6 +29,7 @@ urlpatterns = [
     path('add-skill/' , SkillAddView.as_view() , name='add-skill'),
     path('add-category/' , CategoryAddView.as_view() , name='add-category'),
     path('edit_app/<int:id>/', edit_appA, name="edit_appA"),
+    path('change-status/', ChangeStatus.as_view(), name="ChangeStatus"),
 
 ]
 
