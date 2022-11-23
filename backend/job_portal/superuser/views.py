@@ -174,3 +174,14 @@ class EditDepartment(APIView):
             print(serializer.errors)
             return Response({'Messages': 'Data is not valid'})
 
+class DeleteDepartment(APIView):
+
+    def delete(self, request):
+
+        id = request.query_params['id']
+
+        department = CompanyDepartment.objects.get(id=id)
+
+        if department:
+            department.delete()
+            return Response({'Message': 'Department Deleted Successfully'})
