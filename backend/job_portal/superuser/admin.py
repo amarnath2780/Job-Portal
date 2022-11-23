@@ -14,9 +14,9 @@ class CompanyDepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ['skill_name', 'department']
+    list_display = ['id','skill_name', 'department']
 
 
 @admin.register(AdminProfile)
 class AdminProfileAdmin(admin.ModelAdmin):
-    list_display = ['admin']
+    list_display = ['id','admin']

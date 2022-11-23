@@ -121,3 +121,20 @@ class AddDepartment(APIView):
         else:
             print(serializer.errors)
             return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class EditSkill(APIView):
+
+    def put(self, request:Response):
+        id = request.query_params['id']
+        
+        skill = Skill.objects.get(id=id)
+        serializer = SkillSerializer(instance=skill , data=request.data)
+
+        if serializer.is_valid():
+            print('serializer is valid')
+            serializer.save()
+            return Response({'message' : 'Skill changed Successfully'} , status=status.HTTP_200_OK)
+        else:
+            print('serializer is not valid')
+            return Response({'Message' : 'Data is not valid'})
