@@ -4,7 +4,7 @@ from rest_framework import routers
 from accounts.views import SeekerView , RecruiterView
 from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView,AddDepartment
 from superuser.views import edit_appA
-from superuser.views import EditSkill
+from superuser.views import EditSkill , EditCategory
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -33,6 +33,7 @@ urlpatterns = [
     path('edit_app/<int:id>/', edit_appA, name="edit_appA"),
     path('change-status/', ChangeStatus.as_view(), name="ChangeStatus"),
     path('edit-skill/', EditSkill.as_view(), name="edit-skill"),
+    path('edit-category/' , EditCategory.as_view() , name="edit-category"),
 
 ]
 

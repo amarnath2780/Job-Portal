@@ -19,4 +19,4 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(AdminProfile)
 class AdminProfileAdmin(admin.ModelAdmin):
-    list_display = ['id','admin']
+    list_display = ['admin']

@@ -138,3 +138,21 @@ class EditSkill(APIView):
         else:
             print('serializer is not valid')
             return Response({'Message' : 'Data is not valid'})
+
+
+class EditCategory(APIView):
+
+    def put(self, request:Response):
+        id = request.query_params['id']
+
+        category = CompanyCategory.objects.get(id=id)
+        serializer = CompanyCategorySerializer(instance=category , data=request.data)
+
+        if serializer.is_valid():
+            print('serializer is valid')
+            serializer.save()
+            return Response({'Message': 'Category changed Successfully'})
+        else:
+            print(serializer.errors)
+            return Response({'Messages': 'Data is not valid'})
+            
