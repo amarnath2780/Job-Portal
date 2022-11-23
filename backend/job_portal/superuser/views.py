@@ -96,3 +96,28 @@ class ChangeStatus(APIView):
             return Response({"message":"changed the data"},status=status.HTTP_200_OK)
         else:
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+class AddCategory(APIView):
+
+    def Post(self, request:Response):
+        serializer = CompanyCategorySerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':' added Successfully'} , status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddDepartment(APIView):
+
+    def post(self, request:Response):
+        serializer = CompanyDepartmentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':' added Successfully'} , status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
