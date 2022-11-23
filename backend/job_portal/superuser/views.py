@@ -176,7 +176,7 @@ class EditDepartment(APIView):
 
 class DeleteDepartment(APIView):
 
-    def delete(self, request):
+    def get(self, request):
 
         id = request.query_params['id']
 
@@ -185,3 +185,16 @@ class DeleteDepartment(APIView):
         if department:
             department.delete()
             return Response({'Message': 'Department Deleted Successfully'})
+
+class DeleteSkill(APIView):
+
+    def get(self, request):
+
+        id = request.query_params['id']
+
+        skill = Skill.objects.get(id=id)
+
+        if skill:
+            skill.delete()
+            return Response({'Message': 'Skill Deleted Successfully'})
+
