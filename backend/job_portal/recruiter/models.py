@@ -69,11 +69,6 @@ class Qualification(models.Model):
         return self.title
 
 
-class Requirements(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
 
 
 class Job(models.Model):
@@ -99,7 +94,7 @@ class Job(models.Model):
     job_type = models.CharField(default = 'full-time' ,choices=JOB_TYPE ,max_length = 200 , blank=True)
     qualification = models.ForeignKey(Qualification , on_delete=models.CASCADE, blank=True)
     full_discription = models.TextField(blank=True)
-    requirements = models.ForeignKey(Requirements , on_delete=models.CASCADE)
+    # requirements = models.ForeignKey(Requirements , on_delete=models.CASCADE)
     schedule = models.CharField(blank=True , max_length=300)
     state =  models.CharField(blank=True , max_length=300)
     country =  models.CharField(blank=True , max_length=300)
@@ -110,3 +105,15 @@ class Job(models.Model):
 
     def __str__(self):
         return self.job_title
+
+
+class Requirements(models.Model):
+    title = models.CharField(max_length=200)
+    job = models.ForeignKey(Job , on_delete=models.CASCADE)
+    requirement_2 = models.CharField(max_length=200 , blank=True)
+    requirement_3 = models.CharField(max_length=200 , blank=True)
+    requirement_4 = models.CharField(max_length=200 , blank=True)
+    requirement_5 = models.CharField(max_length=200 , blank=True)
+
+    def __str__(self):
+        return self.title
