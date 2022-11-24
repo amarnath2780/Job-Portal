@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RecruiterProfile, Company, Application, Job
+from .models import RecruiterProfile, Company, Application, Job , AddRequest
 
 class RecruiterProfileSerializer(serializers.ModelSerializer):
 
@@ -26,4 +26,11 @@ class JobSerilizer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
+        fields = '__all__'
+
+
+class AddRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AddRequest
         fields = '__all__'

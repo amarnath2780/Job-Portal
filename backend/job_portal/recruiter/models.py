@@ -117,3 +117,11 @@ class Requirements(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class AddRequest(models.Model):
+    category_name = models.CharField(max_length = 200)
+
+    def __str__(self):
+        return self.category_name

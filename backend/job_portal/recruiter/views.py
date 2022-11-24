@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from accounts.models import Account
 from .models import Company, RecruiterProfile, Application
-from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer
+from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
@@ -100,4 +100,19 @@ class PostJob(APIView):
             return Response({'message' : "Job Posed successfully"  }, status=status.HTTP_200_OK)
         else:
             print('serilzer not valid')
+            return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
+
+
+class RequestCatAddView(APIView):
+
+    def post(self, request:Response):
+
+        serializer = AddRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message' : "Add Category Request successfull"  }, status=status.HTTP_200_OK)
+        else:
+            print('serilzer not valid')
+            print(serializer.errors)
             return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
