@@ -5,6 +5,7 @@ from accounts.views import SeekerView , RecruiterView
 from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView,AddDepartment
 from superuser.views import edit_appA
 from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill
+from recruiter.views import PostJob
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -37,7 +38,8 @@ urlpatterns = [
     path('edit-department/' , EditDepartment.as_view() , name="edit-department"),
     path('delete-department/' , DeleteDepartment.as_view() , name="edit-department"),
     path('delete-skill/' , DeleteSkill.as_view() , name="edit-department"),
-
+    path('post-job/' , PostJob.as_view() , name="post-job"),
+    
 ]
 
 urlpatterns += router.urls
