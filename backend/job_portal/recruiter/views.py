@@ -87,3 +87,4 @@ class ApplyedView(APIView):
             print(serializer.errors)
             print('data not found')
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+

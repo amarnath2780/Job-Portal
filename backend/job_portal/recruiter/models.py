@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import Account
 from superuser.models import CompanyCategory
+
+
 # Create your models here.
 
 
@@ -59,3 +61,52 @@ class Application(models.Model):
 
     def __str__(self):
         return self.first_name
+
+class Qualification(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class Requirements(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class Job(models.Model):
+
+    SALARY_TYPE = [
+        ('a month' , 'a month'),
+        ('a year' ,  'a year'),
+    ]
+
+    JOB_TYPE = [
+        ('part-time' , 'Part Time'),
+        ('full-time' , 'Full Time'),
+        ('intern' , 'Intern'),
+        ('remort' , 'Remort'),
+        ('work-from-home' , 'Work From Home'),
+    ]
+
+    job_title = models.CharField(max_length=200)
+    company = models.ForeignKey(Company , on_delete=models.CASCADE)
+    min_salary = models.IntegerField(blank=True)
+    max_salary = models.IntegerField()
+    salary_type = models.CharField(default='a year' , choices=SALARY_TYPE, max_length = 200 , blank=True)
+    job_type = models.CharField(default = 'full-time' ,choices=JOB_TYPE ,max_length = 200 , blank=True)
+    qualification = models.ForeignKey(Qualification , on_delete=models.CASCADE, blank=True)
+    full_discription = models.TextField(blank=True)
+    requirements = models.ForeignKey(Requirements , on_delete=models.CASCADE)
+    schedule = models.CharField(blank=True , max_length=300)
+    state =  models.CharField(blank=True , max_length=300)
+    country =  models.CharField(blank=True , max_length=300)
+    vacancy = models.IntegerField()
+    urgent = models.BooleanField(default = False)
+    posted_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.job_title
