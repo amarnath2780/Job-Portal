@@ -34,3 +34,4 @@ class QualificationAdmin(admin.ModelAdmin):
 @admin.register(AddRequest)
 class AddRequestAdmin(admin.ModelAdmin):
     list_display = ['id' , 'category_name']
+

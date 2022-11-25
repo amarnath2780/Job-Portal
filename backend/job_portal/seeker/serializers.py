@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SeekerProfile
+from .models import SeekerProfile 
 
 
 class SeekerProfileSerializer(serializers.ModelSerializer):

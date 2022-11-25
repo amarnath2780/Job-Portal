@@ -30,9 +30,13 @@ class Company(models.Model):
 class RecruiterProfile(models.Model):
     recruiter = models.ForeignKey(Account ,related_name='recruiter_profile' , on_delete=models.CASCADE)
     company = models.ForeignKey(Company , on_delete=models.CASCADE, null=True, blank=True)
+    profile_pic = models.ImageField('/images/' , blank=True)
+    about = models.TextField(blank=True)
 
     def __str__(self):
         return str(self.id)
+
+
 
 
 
