@@ -8,6 +8,8 @@ from rest_framework import status
 from recruiter.models import Application
 from recruiter.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view, permission_classes
+from recruiter.models import AddRequest
+from recruiter.serializers import AddRequestSerializer
 # Create your views here.
 
 
@@ -39,6 +41,12 @@ class AccepetdView(ModelViewSet):
 class RejectedView(ModelViewSet):
     queryset = Application.objects.filter(status="Rejected")
     serializer_class = ApplicationSerializer
+
+
+class ViewAllReq(ModelViewSet):
+    queryset = AddRequest.objects.all()
+    serializer_class = AddRequestSerializer
+
 
 class CategoryAddView(APIView):
 
@@ -198,3 +206,28 @@ class DeleteSkill(APIView):
             skill.delete()
             return Response({'Message': 'Skill Deleted Successfully'})
 
+
+class AddRequestCategory(APIView):
+
+    def post(slef, request:Response):
+
+        id = request.query_params['id']
+
+        serializer = CompanyCategorySerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            
+            requested = AddRequest.objects.get(id=id)
+
+            if requested:
+                requested.delete()
+            else:
+                return Response({'message':' Data cant found'} , status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Category added Successfully and remove the request'} , status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+    

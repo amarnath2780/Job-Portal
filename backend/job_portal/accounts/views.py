@@ -144,3 +144,12 @@ class SeekerView(ModelViewSet):
 class RecruiterView(ModelViewSet):
     queryset = Account.objects.filter(role='recruiter')
     serializer_class = UserViewSerializer
+
+
+
+class Logout(APIView):
+
+    def get(self, request, format=None):
+        # simply delete the token to force a login
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)

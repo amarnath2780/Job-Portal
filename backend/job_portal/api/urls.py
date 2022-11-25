@@ -4,8 +4,9 @@ from rest_framework import routers
 from accounts.views import SeekerView , RecruiterView
 from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView,AddDepartment
 from superuser.views import edit_appA
-from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill
-from recruiter.views import PostJob , RequestCatAddView
+from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill ,ViewAllReq,AddRequestCategory
+from recruiter.views import PostJob , RequestCatAddView 
+from seeker.views import ViewAllJobs , ViewJobSingle
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -20,6 +21,9 @@ router.register(r'list-category', ListCompanyCategoryView , basename='list-depar
 router.register(r'pending-app', PendingApp , basename='pending-app')
 router.register(r'accepted-app', AccepetdView , basename='acceped-app')
 router.register(r'rejected-app', RejectedView , basename='rejected-app')
+router.register(r'request-category', ViewAllReq , basename='add-req-cat')
+router.register(r'all-jobs', ViewAllJobs , basename='view-all-name')
+
 
 
 urlpatterns = [
@@ -40,6 +44,8 @@ urlpatterns = [
     path('delete-skill/' , DeleteSkill.as_view() , name="edit-department"),
     path('post-job/' , PostJob.as_view() , name="post-job"),
     path('req-cat/' , RequestCatAddView.as_view() , name="req-cat"),
+    path('req-accept/' , AddRequestCategory.as_view() , name="req-cat"),
+    path('job/' , ViewJobSingle.as_view() , name="req-cat"),
 ]
 
 urlpatterns += router.urls
