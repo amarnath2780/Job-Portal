@@ -7,6 +7,8 @@ from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser , MultiPartParser ,FormParser
+from accounts.models import Account
+from accounts.serializers import UserViewSerializer
 
 # Create your views here.
 class SeekerProfileViewSet(ModelViewSet):
@@ -21,18 +23,15 @@ class ViewAllJobs(ModelViewSet):
 class ViewJobSingle(APIView):
 
     def get(self, request):
+        
+        id = request.query_params['id']
+        print(id)
+          
+        job = Job.objects.get(id=id)
 
-        try:
-            id = request.query_params['id']
+        serializer = JobSerilizer(job, many=False)
 
-            job = Job.objects.get(id=id)
-
-            serializer = JobSerilizer(job, many=False)
-
-            return Response(data=serializer.data,status=status.HTTP_400_BAD_REQUEST)
-        except:
-            print('data not found')
-            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
 
 
 
@@ -49,4 +48,39 @@ class UpdateProfile(APIView):
             serilaizer.save()
             return Response({"message":"changed the data"},status=status.HTTP_200_OK)
         else:
+            print(serilaizer.errors)
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ViewProfile(APIView):
+
+    def get(self , request:Response):
+        try:
+            id = request.query_params['id']
+
+            profile = SeekerProfile.objects.get(id=id)
+
+            serializer = SeekerProfileSerializer(profile, many=False)
+
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDetails(APIView):
+
+
+    def get(self, request:Response):
+        try:
+            id = request.query_params['id']
+
+            profile = Account.objects.get(id=id)
+            
+            serializer = UserViewSerializer(profile , many=False)
+
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
+        except:
+            print('data not found')
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)

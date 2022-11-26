@@ -82,7 +82,7 @@ class ApplyedView(APIView):
 
             serializer = ApplicationSerializer(application , many=True)
 
-            return Response(data=serializer.data,status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
         except:
             print(serializer.errors)
             print('data not found')
