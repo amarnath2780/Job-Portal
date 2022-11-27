@@ -16,9 +16,7 @@ class SeekerProfileViewSet(ModelViewSet):
     serializer_class = SeekerProfileSerializer
 
 
-class ViewAllJobs(ModelViewSet):
-    queryset = Job.objects.all()
-    serializer_class = JobSerilizer
+
     
 class ViewJobSingle(APIView):
 
@@ -79,6 +77,22 @@ class UserDetails(APIView):
             profile = Account.objects.get(id=id)
             
             serializer = UserViewSerializer(profile , many=False)
+
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ViewAllJobs(APIView):
+
+    def get(self,request:Response):
+
+        try:
+            job = Job.objects.all()
+
+            serializer = JobSerilizer(job , many=True)
 
             return Response(data=serializer.data,status=status.HTTP_200_OK)
         except:

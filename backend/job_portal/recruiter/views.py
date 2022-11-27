@@ -99,6 +99,7 @@ class PostJob(APIView):
             serializer.save()
             return Response({'message' : "Job Posed successfully"  }, status=status.HTTP_200_OK)
         else:
+            print(serializer.errors)
             print('serilzer not valid')
             return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
 
@@ -116,3 +117,19 @@ class RequestCatAddView(APIView):
             print('serilzer not valid')
             print(serializer.errors)
             return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
+
+
+
+class RecruiterProfileDetails(APIView):
+
+    def get(self, request:Response):
+
+        id  = request.query_params['id']
+
+        try:
+            profile = RecruiterProfile.objects.get(id=id)
+            serializer = RecruiterProfileSerializer(profile , many=False)
+            return Response(data=serializer.data , status=status.HTTP_200_OK)
+        except:
+            print('data not fount')
+            return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)

@@ -5,7 +5,7 @@ from accounts.views import SeekerView , RecruiterView
 from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView,AddDepartment
 from superuser.views import edit_appA
 from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill ,ViewAllReq,AddRequestCategory
-from recruiter.views import PostJob , RequestCatAddView 
+from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails
 
 router = routers.DefaultRouter()
@@ -22,7 +22,7 @@ router.register(r'pending-app', PendingApp , basename='pending-app')
 router.register(r'accepted-app', AccepetdView , basename='acceped-app')
 router.register(r'rejected-app', RejectedView , basename='rejected-app')
 router.register(r'request-category', ViewAllReq , basename='add-req-cat')
-router.register(r'all-jobs', ViewAllJobs , basename='view-all-name')
+
 
 
 
@@ -49,6 +49,8 @@ urlpatterns = [
     path('update-profile/' , UpdateProfile.as_view() , name="update-profile"),
     path('view-profile/' , ViewProfile.as_view() , name="ViewProfile"),
     path('user-details/' , UserDetails.as_view() , name="user-details"),
+    path('recruiter-profile/' ,RecruiterProfileDetails.as_view() , name='recruiter-profile'),
+    path('all-jobs/' ,ViewAllJobs.as_view() , name='all-jobs'),
 ]
 
 urlpatterns += router.urls

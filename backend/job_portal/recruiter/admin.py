@@ -20,7 +20,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
-    list_display= ['id','job_title'  , 'company']
+    list_display= ['id','job_title'  , 'company_id']
 
 @admin.register(Requirements)
 class ReqRequirementAdmin(admin.ModelAdmin):

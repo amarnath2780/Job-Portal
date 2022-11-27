@@ -8,7 +8,7 @@ class SeekerProfile(models.Model):
     skills = models.ManyToManyField(Skill , blank=True)
     profie_pic = models.ImageField('/images/' , blank=True)
     about = models.TextField(blank=True)
-    category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True)
+    category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True , null=True)
     state = models.CharField(max_length=200 , blank = True)
     country = models.CharField(max_length=200,blank=True)
 

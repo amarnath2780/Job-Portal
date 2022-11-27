@@ -42,6 +42,7 @@ class SignUpView(generics.GenericAPIView):
             if role == 'seeker':
                 print('role is seeker')
                 user = Account.objects.get(email = email)
+                print(user)
                 SeekerProfile.objects.create(seeker=user)
                 phone_number = data.get('phone_number')
                 # send_otp(phone_number)
@@ -114,6 +115,7 @@ class LoginView(APIView):
             response = {
                 "message": "Login successfull",
                 "token": tokens,
+                'profile_id':profile.id,
                 "user" : {
                     "user_id":user.id,
                     "email":user.email,

@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from .models import RecruiterProfile, Company, Application, Job , AddRequest
+from accounts.serializers import UserViewSerializer
 
 class RecruiterProfileSerializer(serializers.ModelSerializer):
-
+    recruiter = UserViewSerializer(read_only=True , many=False)
     class Meta:
         model = RecruiterProfile
         fields = '__all__'
@@ -23,7 +24,8 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
 
 class JobSerilizer(serializers.ModelSerializer):
-    company = CompanySerializer(read_only=True , many=False)
+    company_id = CompanySerializer(read_only=True ,)
+    recruiter = UserViewSerializer(read_only=True ,)
     class Meta:
         model = Job
         fields = '__all__'

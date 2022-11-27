@@ -30,8 +30,12 @@ class Company(models.Model):
 class RecruiterProfile(models.Model):
     recruiter = models.ForeignKey(Account ,related_name='recruiter_profile' , on_delete=models.CASCADE)
     company = models.ForeignKey(Company , on_delete=models.CASCADE, null=True, blank=True)
-    profile_pic = models.ImageField('/images/' , blank=True)
+    profie_pic = models.ImageField('/images/' , blank=True)
     about = models.TextField(blank=True)
+    category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True , null=True)
+    state = models.CharField(max_length=200 , blank = True)
+    country = models.CharField(max_length=200,blank=True)
+
 
     def __str__(self):
         return str(self.id)
@@ -91,7 +95,8 @@ class Job(models.Model):
     ]
 
     job_title = models.CharField(max_length=200)
-    company = models.ForeignKey(Company , on_delete=models.CASCADE)
+    company_id = models.ForeignKey(Company , on_delete=models.CASCADE)
+    recruiter = models.ForeignKey(Account, on_delete=models.CASCADE)
     min_salary = models.IntegerField(blank=True)
     max_salary = models.IntegerField()
     salary_type = models.CharField(default='a year' , choices=SALARY_TYPE, max_length = 200 , blank=True)
