@@ -1,8 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import SeekerProfile 
-from .serializers import SeekerProfileSerializer 
-from recruiter.models import Job
+from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer
+from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response
 from rest_framework import status
@@ -98,3 +98,28 @@ class ViewAllJobs(APIView):
         except:
             print('data not found')
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+class ApplyJob(APIView):
+
+    def post(self, request:Response):
+
+
+        serializer = AppliedJobsSerizlizer(data=request.data)
+        users = request.data.get('recruiter')
+        print(users)
+        recruiter = Account.objects.get(email =users)
+        print(recruiter)
+        request.data['recruiter_id'] = recruiter.id
+
+        if serializer.is_valid():
+
+            print('serializer is valid')
+            serializer.save()
+            return Response({'Message':'Applied Successfully'} , status=status.HTTP_200_OK)
+        else:
+            print('data not found')
+            print(serializer.errors)
+            return Response({'Message':'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)

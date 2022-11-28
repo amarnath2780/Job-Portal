@@ -5,7 +5,7 @@ from .models import RecruiterProfile , Company, Application , Job , Qualificatio
 
 @admin.register(RecruiterProfile)
 class RecruiterProfileAdmin(admin.ModelAdmin):
-    list_display = ['recruiter', 'company']
+    list_display = [ 'id','recruiter', 'company']
 
 
 @admin.register(Company)
