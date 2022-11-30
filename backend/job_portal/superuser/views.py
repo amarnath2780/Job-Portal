@@ -230,4 +230,8 @@ class AddRequestCategory(APIView):
             return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
-    
+class AddRequestSkill(APIView):
+
+    def post(slef, request:Response):
+        
+        id = request.query_params['id']
