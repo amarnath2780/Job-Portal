@@ -113,6 +113,7 @@ class Job(models.Model):
     job_type = models.CharField(default = 'full-time' ,choices=JOB_TYPE ,max_length = 200 , blank=True)
     qualification = models.ForeignKey(Qualification , on_delete=models.CASCADE, blank=True)
     full_discription = models.TextField(blank=True)
+    short_discription = models.TextField(blank=True)
     schedule = models.CharField(blank=True , max_length=300)
     state =  models.CharField(blank=True , max_length=300)
     country =  models.CharField(blank=True , max_length=300)
