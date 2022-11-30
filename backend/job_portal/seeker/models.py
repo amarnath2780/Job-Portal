@@ -1,15 +1,26 @@
 from django.db import models
 from accounts.models import Account
-from superuser.models import Skill , CompanyCategory
+from superuser.models import Skill , CompanyCategory , CompanyDepartment
 from recruiter.models import Job , RecruiterProfile ,Company
 
 # Create your models here.
 class SeekerProfile(models.Model):
+
+    SEEKER_STATUS = [
+        ('fresher' , 'Fresher'),
+        ('intermediate' , 'Intermediate'),
+        ('professional', 'Professional')
+    ]
+
+
     seeker = models.ForeignKey(Account, related_name='seeker_profile',on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill , blank=True)
     profie_pic = models.ImageField('/images/' , blank=True)
     about = models.TextField(blank=True)
     category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True , null=True)
+    department = models.ForeignKey(CompanyDepartment ,on_delete=models.CASCADE , blank=True , null=True)
+    level = models.CharField(default = 'fresher' ,choices=SEEKER_STATUS , max_length=200 ,blank=True)
+    experince = models.IntegerField(blank=True)
     state = models.CharField(max_length=200 , blank = True)
     country = models.CharField(max_length=200,blank=True)
 

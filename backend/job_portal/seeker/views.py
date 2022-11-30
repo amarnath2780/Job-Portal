@@ -9,6 +9,9 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser , MultiPartParser ,FormParser
 from accounts.models import Account
 from accounts.serializers import UserViewSerializer
+from rest_framework.generics import ListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
+from .filter import JobFilter
 
 # Create your views here.
 class SeekerProfileViewSet(ModelViewSet):
@@ -123,3 +126,11 @@ class ApplyJob(APIView):
             print('data not found')
             print(serializer.errors)
             return Response({'Message':'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class JobFilerView(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerilizer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = JobFilter
