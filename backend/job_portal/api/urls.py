@@ -7,8 +7,7 @@ from superuser.views import edit_appA
 from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill ,ViewAllReq,AddRequestCategory
 from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
-from superuser.views import AddRequestDepartmentView , AddRequestSkillView
-
+from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
 
 
 
@@ -26,6 +25,8 @@ router.register(r'pending-app', PendingApp , basename='pending-app')
 router.register(r'accepted-app', AccepetdView , basename='acceped-app')
 router.register(r'rejected-app', RejectedView , basename='rejected-app')
 router.register(r'request-category', ViewAllReq , basename='add-req-cat')
+router.register(r'request-skill', ViewSkillRequest , basename='add-req-skill')
+router.register(r'request-departments', ViewDepartmentRequest , basename='add-req-department')
 
 
 
@@ -58,7 +59,7 @@ urlpatterns = [
     path('apply-job/' ,ApplyJob.as_view() , name='apply-job'),
     path('filter-job/' ,JobFilerView.as_view() , name='filete-job'),
     path('req-skill/' , RequestSkillAddView.as_view() , name="req-skill"),
-    path('req-department/' , RequestDepartmentAddView.as_view() , name="req-skill"),
+    path('req-depart/' , RequestDepartmentAddView.as_view() , name="req-skill"),
     path('accept-department/' , AddRequestDepartmentView.as_view() , name="accept-department"),
     path('accept-skill/' , AddRequestSkillView.as_view() , name="accept-skill"),
 ]

@@ -154,7 +154,7 @@ class AddRequestSkill(models.Model):
 
 
 class AddRequestDepartment(models.Model):
-    category_id = models.ForeignKey(CompanyCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(CompanyCategory, on_delete=models.CASCADE)
     department_name = models.CharField(max_length=200)
 
     def __str__(self):

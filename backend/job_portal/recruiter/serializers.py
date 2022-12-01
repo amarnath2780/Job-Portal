@@ -51,13 +51,11 @@ class AddRequestSerializer(serializers.ModelSerializer):
 
 
 class AddRequestSkillSerializer(serializers.ModelSerializer):
-    department = CompanyDepartmentSerializer(read_only=True)
     class Meta:
         model = AddRequestSkill
         fields = '__all__'
 
 class AddRequestDepartmentSerializer(serializers.ModelSerializer):
-    category = CompanyCategorySerializer(read_only=True)
     class Meta:
         model = AddRequestDepartment
         fields = '__all__'

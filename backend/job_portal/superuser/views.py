@@ -47,6 +47,13 @@ class ViewAllReq(ModelViewSet):
     queryset = AddRequest.objects.all()
     serializer_class = AddRequestSerializer
 
+class ViewSkillRequest(ModelViewSet):
+    queryset = AddRequestSkill.objects.all()
+    serializer_class = AddRequestSkillSerializer
+
+class ViewDepartmentRequest(ModelViewSet):
+    queryset = AddRequestDepartment.objects.all()
+    serializer_class = AddRequestDepartmentSerializer
 
 class CategoryAddView(APIView):
 
