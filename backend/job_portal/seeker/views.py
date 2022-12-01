@@ -12,6 +12,7 @@ from accounts.serializers import UserViewSerializer
 from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from .filter import JobFilter
+from rest_framework import filters
 
 # Create your views here.
 class SeekerProfileViewSet(ModelViewSet):
@@ -134,3 +135,9 @@ class JobFilerView(ListAPIView):
     serializer_class = JobSerilizer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = JobFilter
+
+class SearchBarFilter(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerilizer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['^job_title']

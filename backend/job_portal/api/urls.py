@@ -8,7 +8,7 @@ from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepa
 from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
-
+from seeker.views import SearchBarFilter
 
 
 router = routers.DefaultRouter()
@@ -58,6 +58,7 @@ urlpatterns = [
     path('all-jobs/' ,ViewAllJobs.as_view() , name='all-jobs'),
     path('apply-job/' ,ApplyJob.as_view() , name='apply-job'),
     path('filter-job/' ,JobFilerView.as_view() , name='filete-job'),
+    path('search-filter/' ,SearchBarFilter.as_view() , name='filete-search'),
     path('req-skill/' , RequestSkillAddView.as_view() , name="req-skill"),
     path('req-depart/' , RequestDepartmentAddView.as_view() , name="req-skill"),
     path('accept-department/' , AddRequestDepartmentView.as_view() , name="accept-department"),
