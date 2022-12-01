@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from superuser.models import CompanyCategory
 from superuser.serializers import CompanyCategorySerializer
+from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 # Create your views here.
 
 
@@ -118,6 +119,33 @@ class RequestCatAddView(APIView):
             print(serializer.errors)
             return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
 
+class RequestSkillAddView(APIView):
+
+    def post(self, request:Response):
+
+        serializer = AddRequestSkillSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message' : "Add Category Request successfull"  }, status=status.HTTP_200_OK)
+        else:
+            print('serilzer not valid')
+            print(serializer.errors)
+            return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
+
+class RequestDepartmentAddView(APIView):
+
+    def post(self, request:Response):
+
+        serializer = AddRequestDepartmentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message' : "Add Category Request successfull"  }, status=status.HTTP_200_OK)
+        else:
+            print('serilzer not valid')
+            print(serializer.errors)
+            return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
 
 
 class RecruiterProfileDetails(APIView):

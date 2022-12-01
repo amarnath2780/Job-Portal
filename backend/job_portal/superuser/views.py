@@ -8,8 +8,8 @@ from rest_framework import status
 from recruiter.models import Application
 from recruiter.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view, permission_classes
-from recruiter.models import AddRequest
-from recruiter.serializers import AddRequestSerializer
+from recruiter.models import AddRequest ,AddRequestSkill ,AddRequestDepartment
+from recruiter.serializers import AddRequestSerializer,AddRequestDepartmentSerializer , AddRequestSkillSerializer
 # Create your views here.
 
 
@@ -230,8 +230,46 @@ class AddRequestCategory(APIView):
             return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddRequestSkill(APIView):
+class AddRequestSkillView(APIView):
 
-    def post(slef, request:Response):
-        
+
+    def post(self, request:Response):
+
         id = request.query_params['id']
+        serializer = SkillSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            requested = AddRequestSkill.objects.get(id=id)
+
+            if requested:
+                requested.delete()
+            else:
+                return Response({'message':' Data cant found'} , status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Category added Successfully and remove the request'} , status=status.HTTP_200_OK)
+
+        else:
+            print(serializer.errors)
+            return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddRequestDepartmentView(APIView):
+
+    def post(self, request:Response):
+
+        id = request.query_params['id']
+        serializer = CompanyDepartmentSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            requested = AddRequestDepartment.objects.get(id=id)
+
+            if requested:
+                requested.delete()
+            else:
+                return Response({'message':' Data cant found'} , status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Category added Successfully and remove the request'} , status=status.HTTP_200_OK)
+
+        else:
+            print(serializer.errors)
+            return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)

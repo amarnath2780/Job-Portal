@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RecruiterProfile , Company, Application , Job , Qualification , Requirements ,AddRequest
+from .models import RecruiterProfile , Company, Application , Job , Qualification , Requirements ,AddRequest ,AddRequestSkill ,AddRequestDepartment
 
 # Register your models here.
 
@@ -35,3 +35,12 @@ class QualificationAdmin(admin.ModelAdmin):
 class AddRequestAdmin(admin.ModelAdmin):
     list_display = ['id' , 'category_name']
 
+
+@admin.register(AddRequestSkill)
+class AddRequestSkillAdmin(admin.ModelAdmin):
+    list_display = ['id' , 'skill_name' , 'department_id']
+
+
+@admin.register(AddRequestDepartment)
+class AddRequestDepartmentAdmin(admin.ModelAdmin):
+    list_display = ['id' , 'category_id' , 'department_name']
