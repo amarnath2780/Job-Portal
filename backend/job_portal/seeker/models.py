@@ -20,7 +20,7 @@ class SeekerProfile(models.Model):
     category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True , null=True)
     department = models.ForeignKey(CompanyDepartment ,on_delete=models.CASCADE , blank=True , null=True)
     level = models.CharField(default = 'fresher' ,choices=SEEKER_STATUS , max_length=200 ,blank=True)
-    experince = models.IntegerField(blank=True)
+    experince = models.IntegerField(blank=True,null=True)
     state = models.CharField(max_length=200 , blank = True)
     country = models.CharField(max_length=200,blank=True)
 
