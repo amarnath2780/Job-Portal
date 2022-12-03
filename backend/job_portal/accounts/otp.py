@@ -22,7 +22,7 @@ def send_otp(mobile):
 
 def verify_otp(mobile,otp):
     number = str(mobile)
-    print(otp)
+    print(number, otp)
     account_sid = settings.TWILIO_ACCOUNT_SID
     auth_token = settings.TWILIO_AUTH_TOKEN
     service_id = settings.TWILIO_SERVICE_SID

@@ -8,7 +8,7 @@ from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepa
 from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
-from seeker.views import SearchBarFilter
+from seeker.views import SearchBarFilter 
 
 
 router = routers.DefaultRouter()

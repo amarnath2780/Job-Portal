@@ -45,17 +45,18 @@ class SignUpView(generics.GenericAPIView):
                 print(user)
                 SeekerProfile.objects.create(seeker=user)
                 phone_number = data.get('phone_number')
-                # send_otp(phone_number)
+                send_otp(phone_number)
                 # print('otp send')
             elif role == 'recruiter':
                 print('role is recruiter')
+                phone_number = data.get('phone_number')
                 user = Account.objects.get(email=email)
                 user.is_staff = True
-                user.save()
+                send_otp(phone_number)
+                print('otp send')
                 RecruiterProfile.objects.create(recruiter=user)
-                phone_number = data.get('phone_number')
-                # send_otp(phone_number)
-                # print('otp send')
+                
+                
             else:
                 print('user role is not user and recruiter But base User Created!')
             response = {
@@ -100,35 +101,39 @@ class LoginView(APIView):
 
         print(f'user is {user}')
 
-        if user is not None:        
-            print('authenticatied')
-            tokens = create_jwt_pair_tokens(user) 
-            profile = {}      
+        if user is not None:
+            if user.is_verified == True:
+                print('authenticatied')
+                tokens = create_jwt_pair_tokens(user) 
+                profile = {}      
 
-            if user.role == 'seeker':
-                profile = SeekerProfile.objects.get(seeker=user)
-            elif user.role == 'recruiter':
-                profile = RecruiterProfile.objects.get(recruiter=user)
+                if user.role == 'seeker':
+                    profile = SeekerProfile.objects.get(seeker=user)
+                elif user.role == 'recruiter':
+                    profile = RecruiterProfile.objects.get(recruiter=user)
+                else:
+                    profile = AdminProfile.objects.get(admin=user)
+
+                response = {
+                    "message": "Login successfull",
+                    "token": tokens,
+                    'profile_id':profile.id,
+                    "user" : {
+                        "user_id":user.id,
+                        "email":user.email,
+                        "role":user.role,
+                        'profile_id':profile.id
+                    }
+                } 
+                return Response(data=response, status=status.HTTP_200_OK)
             else:
-                profile = AdminProfile.objects.get(admin=user)
+                response = {
+                    "message": "User is not Verified",
+                } 
+                return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
 
-            response = {
-                "message": "Login successfull",
-                "token": tokens,
-                'profile_id':profile.id,
-                "user" : {
-                    "user_id":user.id,
-                    "email":user.email,
-                    "role":user.role,
-                    'profile_id':profile.id
-                }
-            } 
-            
-            return Response(data=response, status=status.HTTP_200_OK)
         else:
-            return Response(data={
-                "message": "Invalid email or password!"
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"message": "Invalid email or password!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

@@ -60,7 +60,7 @@ class Application(models.Model):
     phone = models.IntegerField()
     recruiter = models.ForeignKey(Account , on_delete=models.CASCADE , blank=True )
     company = models.OneToOneField(Company , on_delete=models.CASCADE,  blank=True)
-    city  = models.CharField(max_length=100 , blank=True)
+    city  = models.CharField(max_length=100 , blank=True , null=True)
     state = models.CharField(max_length=100)
     country = models.CharField(max_length=200)
     status = models.CharField(default='Pending',choices=STATUS,max_length=300,blank=True)
