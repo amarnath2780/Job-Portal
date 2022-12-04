@@ -5,7 +5,7 @@ from accounts.views import SeekerView , RecruiterView
 from superuser.views import ListSkillView , SkillAddView ,ListCompanyDepartmentView , ListCompanyCategoryView , CategoryAddView ,PendingApp,ChangeStatus , AccepetdView , RejectedView,AddDepartment
 from superuser.views import edit_appA
 from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill ,ViewAllReq,AddRequestCategory
-from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView
+from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView ,ShortlistSeeker
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
 from seeker.views import SearchBarFilter 
@@ -63,6 +63,7 @@ urlpatterns = [
     path('req-depart/' , RequestDepartmentAddView.as_view() , name="req-skill"),
     path('accept-department/' , AddRequestDepartmentView.as_view() , name="accept-department"),
     path('accept-skill/' , AddRequestSkillView.as_view() , name="accept-skill"),
+    path('shortlist/' , ShortlistSeeker.as_view() , name="short-list"),
 ]
 
 urlpatterns += router.urls

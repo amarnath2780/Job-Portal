@@ -11,6 +11,8 @@ from rest_framework.views import APIView
 from superuser.models import CompanyCategory
 from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
+from seeker.serializers import AppliedJobsSerizlizer
+from seeker.models import AppliedJob
 # Create your views here.
 
 
@@ -160,4 +162,21 @@ class RecruiterProfileDetails(APIView):
             return Response(data=serializer.data , status=status.HTTP_200_OK)
         except:
             print('data not fount')
+            return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ShortlistSeeker(APIView):
+
+    def post(self, request:Response):
+
+        id = request.query_params['id']
+        uid = request.query_params['uid']
+
+        seeker = AppliedJob.objects.get(id=id , seeker_id=uid)
+
+        if seeker:
+            seeker.shortlisted == True
+            return Response({'message': "Added to shortlist"}, status=status.HTTP_200_OK)
+        else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)

@@ -36,3 +36,4 @@ class AppliedJob(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     phone = models.CharField(max_length=20)
+    shortlisted = models.BooleanField(default=True , blank=True)

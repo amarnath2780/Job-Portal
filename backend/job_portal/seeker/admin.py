@@ -8,4 +8,4 @@ class SeekerProfileAdmin(admin.ModelAdmin):
     
 @admin.register(AppliedJob)
 class AppliedJobsAdmin(admin.ModelAdmin):
-    list_display = ('seeker_id' , 'recruiter_id' , 'job_id')
+    list_display = ('id','seeker_id' , 'recruiter_id' , 'job_id')
