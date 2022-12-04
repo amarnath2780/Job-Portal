@@ -26,6 +26,11 @@ class CompanyView(ModelViewSet):
     serializer_class = CompanySerializer
 
 
+class ApplyedJobsView(ModelViewSet):
+    queryset = AppliedJob.objects.all()
+    serializer_class = AppliedJobsSerizlizer
+
+
 class CompanyAddView(APIView):
     def post(self, request:Response):
         serilizer = CompanySerializer(data = request.data)
@@ -80,9 +85,7 @@ class ApplyedView(APIView):
 
         try:
             id = request.query_params['id']
-            print(id)
             application = Application.objects.filter(recruiter=id)
-
             serializer = ApplicationSerializer(application , many=True)
 
             return Response(data=serializer.data,status=status.HTTP_200_OK)
@@ -180,3 +183,20 @@ class ShortlistSeeker(APIView):
             return Response({'message': "Added to shortlist"}, status=status.HTTP_200_OK)
         else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class JobAppliedSeekerView(APIView):
+
+    def get(self, request:Response):
+
+        try:
+            id = request.query_params['id']
+
+            job = AppliedJob.objects.filter(job_id=id)
+
+            serilizer = AppliedJobsSerizlizer(job, many=True)
+
+            return Response(data=serilizer.data ,status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)

@@ -9,7 +9,7 @@ from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetail
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
 from seeker.views import SearchBarFilter 
-
+from recruiter.views import ApplyedJobsView , JobAppliedSeekerView
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -27,6 +27,7 @@ router.register(r'rejected-app', RejectedView , basename='rejected-app')
 router.register(r'request-category', ViewAllReq , basename='add-req-cat')
 router.register(r'request-skill', ViewSkillRequest , basename='add-req-skill')
 router.register(r'request-departments', ViewDepartmentRequest , basename='add-req-department')
+router.register(r'applied-jobs', ApplyedJobsView , basename='applied-jobs-list')
 
 
 
@@ -64,6 +65,7 @@ urlpatterns = [
     path('accept-department/' , AddRequestDepartmentView.as_view() , name="accept-department"),
     path('accept-skill/' , AddRequestSkillView.as_view() , name="accept-skill"),
     path('shortlist/' , ShortlistSeeker.as_view() , name="short-list"),
+    path('applied-job-seekers/', JobAppliedSeekerView.as_view() , name='applied-job-seekers')
 ]
 
 urlpatterns += router.urls
