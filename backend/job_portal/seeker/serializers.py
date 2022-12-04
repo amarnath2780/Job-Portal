@@ -11,8 +11,8 @@ class SeekerProfileSerializer(serializers.ModelSerializer):
 
 class AppliedJobsSerizlizer(serializers.ModelSerializer):
     job_id = JobSerilizer(read_only = True)
-    recruiter = RecruiterProfileSerializer(read_only = True)
-    seeker = UserViewSerializer(read_only=True)
+    recruiter_id = RecruiterProfileSerializer(read_only = True)
+    seeker_id = SeekerProfileSerializer(read_only=True )
     class Meta:
         model = AppliedJob
         fields = '__all__'

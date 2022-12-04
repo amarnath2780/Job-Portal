@@ -13,6 +13,7 @@ from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
+from recruiter.models import Job
 # Create your views here.
 
 
@@ -197,6 +198,22 @@ class JobAppliedSeekerView(APIView):
             serilizer = AppliedJobsSerizlizer(job, many=True)
 
             return Response(data=serilizer.data ,status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
+
+class PostedJobListView(APIView):
+
+
+    def get(self, request:Response):
+
+        try:
+            id = request.query_params['id']
+
+            jobs = Job.objects.filter(recruiter=id)
+            serializer = JobSerilizer(jobs , many=True)
+
+            return Response(data= serializer.data , status=status.HTTP_200_OK)
         except:
             print('data not found')
             return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
