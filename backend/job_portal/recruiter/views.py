@@ -178,9 +178,9 @@ class ShortlistSeeker(APIView):
         uid = request.query_params['uid']
 
         seeker = AppliedJob.objects.get(id=id , seeker_id=uid)
-
         if seeker:
-            seeker.shortlisted == True
+            seeker.is_shortlisted = True
+            seeker.save()
             return Response({'message': "Added to shortlist"}, status=status.HTTP_200_OK)
         else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
@@ -204,7 +204,6 @@ class JobAppliedSeekerView(APIView):
 
 class PostedJobListView(APIView):
 
-
     def get(self, request:Response):
 
         try:
@@ -212,6 +211,22 @@ class PostedJobListView(APIView):
 
             jobs = Job.objects.filter(recruiter=id)
             serializer = JobSerilizer(jobs , many=True)
+
+            return Response(data= serializer.data , status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class AppliedJobSingleJob(APIView):
+
+    def get(self, request:Response):
+
+        try:
+            id = request.query_params['id']
+
+            job = AppliedJob.objects.get(id=id)
+            serializer = AppliedJobsSerizlizer(job , many=False)
 
             return Response(data= serializer.data , status=status.HTTP_200_OK)
         except:
