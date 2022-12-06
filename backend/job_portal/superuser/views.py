@@ -10,6 +10,8 @@ from recruiter.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view, permission_classes
 from recruiter.models import AddRequest ,AddRequestSkill ,AddRequestDepartment
 from recruiter.serializers import AddRequestSerializer,AddRequestDepartmentSerializer , AddRequestSkillSerializer
+from superuser.serializers import BannerSerializer
+from superuser.models import Banner
 # Create your views here.
 
 
@@ -54,6 +56,9 @@ class ViewSkillRequest(ModelViewSet):
 class ViewDepartmentRequest(ModelViewSet):
     queryset = AddRequestDepartment.objects.all()
     serializer_class = AddRequestDepartmentSerializer
+
+
+
 
 class CategoryAddView(APIView):
 
@@ -280,3 +285,16 @@ class AddRequestDepartmentView(APIView):
         else:
             print(serializer.errors)
             return Response({'message':' Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class BannerImageView(APIView):
+
+    def get(self, request):
+
+        id = request.query_params['id']
+
+        banner = Banner.objects.get(id=id)
+
+        serializer = BannerSerializer(banner , many=False)
+
+        return Response(data=serializer.data , status=status.HTTP_200_OK)

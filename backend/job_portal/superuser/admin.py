@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CompanyCategory, CompanyDepartment, Skill ,AdminProfile
+from .models import CompanyCategory, CompanyDepartment, Skill ,AdminProfile , Banner
 
 
 @admin.register(CompanyCategory)
@@ -20,3 +20,7 @@ class SkillAdmin(admin.ModelAdmin):
 @admin.register(AdminProfile)
 class AdminProfileAdmin(admin.ModelAdmin):
     list_display = ['admin']
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ['id' , 'image']

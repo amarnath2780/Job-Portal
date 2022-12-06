@@ -35,7 +35,8 @@ class RecruiterProfile(models.Model):
     category = models.ForeignKey(CompanyCategory,on_delete=models.CASCADE , blank=True , null=True)
     state = models.CharField(max_length=200 , blank = True)
     country = models.CharField(max_length=200,blank=True)
-
+    is_requested = models.BooleanField(default=False, blank=True)
+    is_acceped =  models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return str(self.id)
@@ -57,7 +58,7 @@ class Application(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length = 200)
     email = models.CharField(max_length=200)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=200)
     recruiter = models.ForeignKey(Account , on_delete=models.CASCADE , blank=True )
     company = models.OneToOneField(Company , on_delete=models.CASCADE,  blank=True)
     city  = models.CharField(max_length=100 , blank=True , null=True)
@@ -65,6 +66,7 @@ class Application(models.Model):
     country = models.CharField(max_length=200)
     status = models.CharField(default='Pending',choices=STATUS,max_length=300,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
     
 
     def __str__(self):

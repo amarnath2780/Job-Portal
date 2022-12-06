@@ -28,3 +28,10 @@ class AdminProfile(models.Model):
     admin = models.ForeignKey(Account , on_delete=models.CASCADE)
     def __str__(self):
         return str(self.id)
+
+
+class Banner(models.Model):
+    image = models.ImageField('/images/' , blank=True)
+
+    def __str__(self):
+        return str(self.id)

@@ -7,7 +7,7 @@ from superuser.views import edit_appA
 from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepartment,DeleteSkill ,ViewAllReq,AddRequestCategory
 from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView ,ShortlistSeeker
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
-from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest
+from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
 from seeker.views import SearchBarFilter 
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob
 
@@ -68,6 +68,7 @@ urlpatterns = [
     path('applied-job-seekers/', JobAppliedSeekerView.as_view() , name='applied-job-seekers'),
     path('jobs-recruiter-posted/',  PostedJobListView.as_view() , name='applied-job-seekers'),
     path('applied-single-job/',  AppliedJobSingleJob.as_view() , name='applied-single-job'),
+    path('banner/',  BannerImageView.as_view() , name='banner-img'),
 ]
 
 urlpatterns += router.urls

@@ -55,6 +55,8 @@ class RecruiterProfileView(ModelViewSet):
 class ApplicationView(APIView):
     def post(self , request:Response):
 
+        id = request.query_params['id']
+
         serilizer = ApplicationSerializer(data=request.data)
         comapny_id = request.data.get('company')
         security_code = request.data.get('pass')
@@ -67,8 +69,17 @@ class ApplicationView(APIView):
         if company.security_code == security_code:
             if serilizer.is_valid():
                 serilizer.save()
+
+                profile = RecruiterProfile.objects.get(id=id)
+
+                if profile:
+                    profile.is_requested = True
+
+                    profile.save()
+
                 return Response({'message' : "created successfully"  }, status=status.HTTP_200_OK)
             else:
+                print(serilizer.errors)
                 print('serilzer not valid')
                 return Response({'message' : 'Details are not  Valid'} , status=status.HTTP_400_BAD_REQUEST )
         else:
