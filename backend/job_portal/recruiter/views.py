@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from accounts.models import Account
 from .models import Company, RecruiterProfile, Application
-from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer
+from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer 
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
@@ -243,3 +243,20 @@ class AppliedJobSingleJob(APIView):
         except:
             print('data not found')
             return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class DeclineJobRequestView(APIView):
+
+    def post(self, request):
+
+        id = request.query_params['id']
+        uid = request.query_params['uid']
+
+        application = AppliedJob.objects.get(id=id ,  seeker_id=uid)
+
+        if application:
+
+            return Response({'message': "Request Declined"}, status=status.HTTP_200_OK)
+        else:
+            return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)

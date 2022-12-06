@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import SeekerProfile 
-from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer
+from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost
 from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response
@@ -111,7 +111,7 @@ class ApplyJob(APIView):
     def post(self, request:Response):
 
 
-        serializer = AppliedJobsSerizlizer(data=request.data)
+        serializer = AppliedJobsSerizlizerPost(data=request.data)
         users = request.data.get('recruiter')
         print(users)
         recruiter = Account.objects.get(email =users)

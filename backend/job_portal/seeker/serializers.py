@@ -10,9 +10,14 @@ class SeekerProfileSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AppliedJobsSerizlizer(serializers.ModelSerializer):
-    job_id = JobSerilizer(read_only = True)
-    recruiter_id = RecruiterProfileSerializer(read_only = True)
-    seeker_id = SeekerProfileSerializer(read_only=True )
+    job_id = JobSerilizer(read_only=True)
+    recruiter_id = RecruiterProfileSerializer(read_only=True)
+    seeker_id = SeekerProfileSerializer(read_only=True)
+    class Meta:
+        model = AppliedJob
+        fields = '__all__'
+
+class AppliedJobsSerizlizerPost(serializers.ModelSerializer):
     class Meta:
         model = AppliedJob
         fields = '__all__'
