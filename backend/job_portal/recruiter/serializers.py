@@ -5,10 +5,18 @@ from superuser.serializers import CompanyCategorySerializer ,CompanyDepartmentSe
 
 
 class RecruiterProfileSerializer(serializers.ModelSerializer):
-    recruiter = UserViewSerializer(read_only=True , many=False)
     class Meta:
         model = RecruiterProfile
         fields = '__all__'
+
+
+class RecruiterProfileSerializerGet(serializers.ModelSerializer):
+    recruiter = UserViewSerializer(read_only=True , many=False)
+    category = CompanyCategorySerializer(read_only=True , many=False)
+    class Meta:
+        model = RecruiterProfile
+        fields = '__all__'
+
 
 
 class CompanySerializer(serializers.ModelSerializer):

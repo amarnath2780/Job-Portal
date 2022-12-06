@@ -9,7 +9,7 @@ from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetail
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
 from seeker.views import SearchBarFilter 
-from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView
+from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -56,6 +56,7 @@ urlpatterns = [
     path('view-profile/' , ViewProfile.as_view() , name="ViewProfile"),
     path('user-details/' , UserDetails.as_view() , name="user-details"),
     path('recruiter-profile/' ,RecruiterProfileDetails.as_view() , name='recruiter-profile'),
+    path('updata-reqruiter-profile/' ,RecruiterUpdateProfile.as_view() , name='recruiter-profile'),
     path('all-jobs/' ,ViewAllJobs.as_view() , name='all-jobs'),
     path('apply-job/' ,ApplyJob.as_view() , name='apply-job'),
     path('filter-job/' ,JobFilerView.as_view() , name='filete-job'),

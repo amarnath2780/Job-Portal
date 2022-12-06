@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from accounts.models import Account
 from .models import Company, RecruiterProfile, Application
-from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer 
+from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer , RecruiterProfileSerializerGet
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
@@ -173,11 +173,26 @@ class RecruiterProfileDetails(APIView):
 
         try:
             profile = RecruiterProfile.objects.get(id=id)
-            serializer = RecruiterProfileSerializer(profile , many=False)
+            serializer = RecruiterProfileSerializerGet(profile , many=False)
             return Response(data=serializer.data , status=status.HTTP_200_OK)
         except:
             print('data not fount')
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+class RecruiterUpdateProfile(APIView):
+
+    def put(self, request:Response):
+        id = request.query_params['id']
+
+        profile = RecruiterProfile.objects.get(id=id)
+        serilaizer = RecruiterProfileSerializer(instance=profile , data=request.data)
+
+        if serilaizer.is_valid():
+            serilaizer.save()
+            return Response({"message":"changed the data"},status=status.HTTP_200_OK)
+        else:
+            print(serilaizer.errors)
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
 
