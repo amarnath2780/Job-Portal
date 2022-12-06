@@ -8,8 +8,8 @@ from rest_framework import status
 from recruiter.models import Application
 from recruiter.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view, permission_classes
-from recruiter.models import AddRequest ,AddRequestSkill ,AddRequestDepartment
-from recruiter.serializers import AddRequestSerializer,AddRequestDepartmentSerializer , AddRequestSkillSerializer
+from recruiter.models import AddRequest ,AddRequestSkill ,AddRequestDepartment , RecruiterProfile
+from recruiter.serializers import AddRequestSerializer,AddRequestDepartmentSerializer , AddRequestSkillSerializer , RecruiterProfileSerializer
 from superuser.serializers import BannerSerializer
 from superuser.models import Banner
 # Create your views here.
@@ -106,13 +106,19 @@ class ChangeStatus(APIView):
 
     def put(self , request:Response ,pk=None):
         id = request.query_params['id']
-        print(id)
         edit = Application.objects.get(id=id)
+        profile = RecruiterProfile.objects.get(recruiter = edit.recruiter)
         change = ApplicationSerializer(instance=edit, data=request.data)
 
         if change.is_valid():
             print('chnage is valid')
             change.save()
+            
+            profile.is_acceped = True
+            profile.is_requested = False
+
+            profile.save()
+
             return Response({"message":"changed the data"},status=status.HTTP_200_OK)
         else:
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)

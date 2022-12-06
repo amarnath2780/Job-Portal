@@ -37,6 +37,7 @@ class RecruiterProfile(models.Model):
     country = models.CharField(max_length=200,blank=True)
     is_requested = models.BooleanField(default=False, blank=True)
     is_acceped =  models.BooleanField(default=False, blank=True)
+    is_rejected = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return str(self.id)
