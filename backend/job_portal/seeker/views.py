@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import SeekerProfile 
-from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost
+from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost ,SeekerProfileSerializerGet
 from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response
@@ -63,7 +63,7 @@ class ViewProfile(APIView):
 
             profile = SeekerProfile.objects.get(id=id)
 
-            serializer = SeekerProfileSerializer(profile, many=False)
+            serializer = SeekerProfileSerializerGet(profile, many=False)
 
             return Response(data=serializer.data,status=status.HTTP_200_OK)
         except:
