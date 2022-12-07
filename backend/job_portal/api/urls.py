@@ -10,6 +10,9 @@ from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfi
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
 from seeker.views import SearchBarFilter 
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
+from recruiter.views import CeleryTest
+
+
 
 router = routers.DefaultRouter()
 router.register(r'view-company', CompanyView , basename="view-company")
@@ -71,6 +74,7 @@ urlpatterns = [
     path('applied-single-job/',  AppliedJobSingleJob.as_view() , name='applied-single-job'),
     path('banner/',  BannerImageView.as_view() , name='banner-img'),
     path('decline-job-request/',  DeclineJobRequestView.as_view() , name='decline-job-request'),
+    path('test/',  CeleryTest.as_view() , name='test'),
 ]
 
 urlpatterns += router.urls

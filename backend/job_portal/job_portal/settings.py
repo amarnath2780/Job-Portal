@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'recruiter',
     'superuser',
     'channels',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,18 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_RESULT_BACKEND = 'django-db'
+
+
+# Celery beat settings
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
 
 
 # Database
@@ -214,3 +228,6 @@ SIMPLE_JWT = {
 
 
 
+TWILIO_ACCOUNT_SID = 'AC73f2240ed6a4773321287d402389f922'
+TWILIO_AUTH_TOKEN = '60e993b135a82f1ab6c341202d17333e'
+TWILIO_SERVICE_SID= 'VAf441e3ddfccf2c05c5f419aecfb0105f'

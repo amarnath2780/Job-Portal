@@ -14,6 +14,8 @@ from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializ
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
 from recruiter.models import Job
+from rest_framework.decorators import api_view, permission_classes
+from .task import test_func
 # Create your views here.
 
 
@@ -275,3 +277,19 @@ class DeclineJobRequestView(APIView):
             return Response({'message': "Request Declined"}, status=status.HTTP_200_OK)
         else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def test(self ,request):
+
+    test_func.delay()
+
+    return Response({"Message":"done"}, status=status.HTTP_200_OK) 
+
+
+class CeleryTest(APIView):
+
+    def post(self ,request):
+
+        test_func.delay()
+
+        return Response({"Messages" : "Done"} , status=status.HTTP_200_OK)
