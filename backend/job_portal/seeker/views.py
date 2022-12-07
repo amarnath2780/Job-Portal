@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from .models import SeekerProfile 
-from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost ,SeekerProfileSerializerGet
+from .models import SeekerProfile , Notificaiton
+from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost ,SeekerProfileSerializerGet 
 from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response

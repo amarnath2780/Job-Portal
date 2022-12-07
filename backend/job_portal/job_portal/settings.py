@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'seeker',
     'recruiter',
     'superuser',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +69,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'job_portal.wsgi.application'
+# WSGI_APPLICATION = 'job_portal.wsgi.application'
+ASGI_APPLICATION = 'job_portal.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 
 # Database

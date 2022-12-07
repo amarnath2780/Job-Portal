@@ -31,7 +31,7 @@ class AppliedJobsSerizlizerPost(serializers.ModelSerializer):
 class SeekerProfileSerializerGet(serializers.ModelSerializer):
     seeker = UserViewSerializer(read_only = True , many=False)
     category = CompanyCategorySerializer(read_only = True , many=False)
-    department = CompanyDepartmentSerializer(read_only = True , many=False)
+    department = CompanyDepartmentSerializer
     class Meta:
         model = SeekerProfile
         fields = '__all__'

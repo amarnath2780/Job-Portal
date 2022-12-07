@@ -36,5 +36,20 @@ class AppliedJob(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     phone = models.CharField(max_length=20)
-    is_shortlisted = models.BooleanField(default=True , blank=True)
-    is_decline = models.BooleanField(default=True , blank=True)
+    is_shortlisted = models.BooleanField(default=False , blank=True)
+    is_decline = models.BooleanField(default=False , blank=True)
+    is_applied = models.BooleanField(default=True , blank=True)
+
+
+class Notificaiton(models.Model):
+
+    title = models.CharField(max_length=200)
+    sender = models.ForeignKey(SeekerProfile ,related_name = 'notification',on_delete=models.CASCADE,null=True,blank=True,)
+    receive=models.ForeignKey(RecruiterProfile,null=True,blank=True,related_name='user_revoker',on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status=models.CharField(max_length=264,null=True,blank=True,default="unread")
+    type_of_notification=models.CharField(max_length=264,null=True,blank=True)
+
+    
+    def __str__(self):
+        return self.title
