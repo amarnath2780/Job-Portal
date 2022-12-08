@@ -15,7 +15,7 @@ from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
 from recruiter.models import Job
 from rest_framework.decorators import api_view, permission_classes
-from .task import test_func
+from .task import test_func, send_mail_func
 # Create your views here.
 
 
@@ -220,8 +220,10 @@ class JobAppliedSeekerView(APIView):
 
         try:
             id = request.query_params['id']
+            print(id)
 
             job = AppliedJob.objects.filter(job_id=id)
+
 
             serilizer = AppliedJobsSerizlizer(job, many=True)
 
@@ -285,6 +287,6 @@ class CeleryTest(APIView):
 
     def post(self ,request):
 
-        test_func.delay()
+        send_mail_func.delay()
 
         return Response({"Messages" : "Done"} , status=status.HTTP_200_OK)

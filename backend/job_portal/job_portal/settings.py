@@ -231,3 +231,14 @@ SIMPLE_JWT = {
 TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
 TWILIO_SERVICE_SID= config('TWILIO_SERVICE_SID')
+
+
+
+#Twilio SMTP settings
+EMAIL_USE_TLS = config('EMAIL_USE_TLS' , default=True , cast=bool )
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT' , default=587 , cast =int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+DEFAULT_FROM_EMAIL = 'Trabajo <trabajorio2780@gmail.com>'
