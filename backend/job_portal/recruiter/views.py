@@ -278,12 +278,7 @@ class DeclineJobRequestView(APIView):
         else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def test(self ,request):
 
-    test_func.delay()
-
-    return Response({"Message":"done"}, status=status.HTTP_200_OK) 
 
 
 class CeleryTest(APIView):

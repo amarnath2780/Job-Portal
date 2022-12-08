@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-# from decouple import config
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=an14k#nnlhfd#+)90e004%s&t&%#2l#w+eg5kxet0ajm-6x*!'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  config('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -228,6 +228,6 @@ SIMPLE_JWT = {
 
 
 
-TWILIO_ACCOUNT_SID = 'AC73f2240ed6a4773321287d402389f922'
-TWILIO_AUTH_TOKEN = '60e993b135a82f1ab6c341202d17333e'
-TWILIO_SERVICE_SID= 'VAf441e3ddfccf2c05c5f419aecfb0105f'
+TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
+TWILIO_SERVICE_SID= config('TWILIO_SERVICE_SID')
