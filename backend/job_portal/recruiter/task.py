@@ -10,7 +10,7 @@ def test_func(self):
 
 
 @shared_task(bind=True)
-def send_mail_func(self):
+def send_mail_func(self ,id):
 
     user = Account.objects.get(id='3')
 

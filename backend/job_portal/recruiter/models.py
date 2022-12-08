@@ -3,6 +3,7 @@ from accounts.models import Account
 from superuser.models import CompanyCategory , CompanyDepartment
 
 
+
 # Create your models here.
 
 
@@ -162,3 +163,12 @@ class AddRequestDepartment(models.Model):
 
     def __str__(self):
         return self.department_name
+
+class ShorlistedAppliedSeekers(models.Model):
+    seeker_id = models.ForeignKey(Account,on_delete=models.CASCADE)
+    recruiter_id = models.ForeignKey(RecruiterProfile ,on_delete=models.CASCADE)
+    job_id = models.ForeignKey(Job ,on_delete=models.CASCADE)  
+
+
+    def __str__(self):
+        return self.seeker_id.id

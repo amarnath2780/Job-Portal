@@ -207,6 +207,7 @@ class ShortlistSeeker(APIView):
 
         seeker = AppliedJob.objects.get(id=id , seeker_id=uid)
         if seeker:
+            
             seeker.is_shortlisted = True
             seeker.save()
             return Response({'message': "Added to shortlist"}, status=status.HTTP_200_OK)
