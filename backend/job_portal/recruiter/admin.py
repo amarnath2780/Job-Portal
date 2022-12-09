@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import RecruiterProfile , Company, Application , Job , Qualification , Requirements ,AddRequest ,AddRequestSkill ,AddRequestDepartment ,ShorlistedAppliedSeekers
-
+from .models import UserMembership,SubscriptionPlan,MembershipsPurchaces
 # Register your models here.
 
 @admin.register(RecruiterProfile)
@@ -49,3 +49,19 @@ class AddRequestDepartmentAdmin(admin.ModelAdmin):
 @admin.register(ShorlistedAppliedSeekers)
 class ShorlistedAppliedSeekersAdmin(admin.ModelAdmin):
     list_display = ['id' , 'job_id' , 'seeker_id']
+
+
+@admin.register(UserMembership)
+class UserMembershipAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title' , 'duration','price']
+
+
+
+@admin.register(SubscriptionPlan)
+class UserMembershipAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user' , 'plan_expires_in','paid']
+
+
+@admin.register(MembershipsPurchaces)
+class UserMembershipAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user' , 'membership']

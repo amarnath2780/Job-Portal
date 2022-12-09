@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'channels',
     'django_celery_results',
     'django_celery_beat',
+    'django_db_signals',
 ]
 
 MIDDLEWARE = [

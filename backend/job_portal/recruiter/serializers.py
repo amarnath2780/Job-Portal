@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import RecruiterProfile, Company, Application, Job , AddRequest ,Qualification , AddRequestDepartment ,AddRequestSkill ,ShorlistedAppliedSeekers
 from accounts.serializers import UserViewSerializer 
 from superuser.serializers import CompanyCategorySerializer ,CompanyDepartmentSerializer 
-
+from .models import UserMembership,SubscriptionPlan,MembershipsPurchaces
 
 class RecruiterProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -82,4 +82,25 @@ class ShorlistedAppliedSeekersSerializerGET(serializers.ModelSerializer):
     job_id = JobSerilizer(read_only=True ,)
     class Meta: 
         model = ShorlistedAppliedSeekers
+        fields = '__all__'
+
+
+class UserMembershipSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserMembership
+        fields = '__all__'
+
+
+class SubscriptionPlanSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SubscriptionPlan
+        fields = '__all__'
+
+
+class MembershipsPurchacesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MembershipsPurchaces
         fields = '__all__'

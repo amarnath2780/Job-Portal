@@ -1,6 +1,10 @@
 from django.db import models
 from accounts.models import Account
 from superuser.models import CompanyCategory , CompanyDepartment
+from django.db.models.signals import post_save ,pre_save
+from django.dispatch import receiver
+from datetime import datetime
+from datetime import timedelta
 
 
 
@@ -39,6 +43,7 @@ class RecruiterProfile(models.Model):
     is_requested = models.BooleanField(default=False, blank=True)
     is_acceped =  models.BooleanField(default=False, blank=True)
     is_rejected = models.BooleanField(default=False, blank=True)
+    paid = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return str(self.id)
@@ -169,3 +174,57 @@ class ShorlistedAppliedSeekers(models.Model):
     company = models.ForeignKey(Company ,on_delete=models.CASCADE)
     job_id = models.ForeignKey(Job ,on_delete=models.CASCADE)  
     send = models.BooleanField(default = False , blank=True)
+
+
+class UserMembership(models.Model):
+    DURATION = (
+        (30 , 'One Month'),
+        (90 , 'Three Month'),
+    )
+    title = models.CharField(max_length=200 , default='Basic')
+    duration = models.IntegerField(default=30 , choices=DURATION)
+    price = models.CharField(max_length=200, default=0.00)
+
+    def __str__(self):
+        return self.title
+
+
+
+class MembershipsPurchaces(models.Model):
+    user = models.OneToOneField(RecruiterProfile , on_delete=models.CASCADE)
+    membership = models.ForeignKey(UserMembership , on_delete=models.CASCADE)
+    
+
+    def __str__(self):
+        return self.user.state
+
+class SubscriptionPlan(models.Model):
+    user = models.ForeignKey(MembershipsPurchaces , on_delete=models.CASCADE)
+    plan_expires_in = models.DateField(null=True , blank=True)
+    paid = models.BooleanField(default=True)
+
+
+@receiver(post_save , sender=MembershipsPurchaces)
+def create_subscription(sender, instance, *args , **kwargs):
+    if instance:
+        SubscriptionPlan.objects.create(user=instance ,  plan_expires_in=datetime.now().date()+ timedelta(days=instance.membership.duration) )
+        profile = RecruiterProfile.objects.get(id=instance.user.id)
+        profile.paid = True
+        profile.save()
+
+
+@receiver(pre_save , sender=SubscriptionPlan)
+def update_paid(sender, instance, *args , **kwargs):
+    today = datetime.now().date()
+    if instance.plan_expires_in < today:
+        instance.paid = False
+        user = RecruiterProfile.objects.get(id=instance.user.user.id)
+        user.paid = False
+        user.save()
+    else:
+        instance.paid = True
+        user = RecruiterProfile.objects.get(id=instance.user.user.id)
+        user.paid = True
+        user.save()
+    
+   
