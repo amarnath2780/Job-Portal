@@ -196,7 +196,7 @@ class MembershipsPurchaces(models.Model):
     
 
     def __str__(self):
-        return self.user.state
+        return self.user.recruiter.first_name
 
 class SubscriptionPlan(models.Model):
     user = models.ForeignKey(MembershipsPurchaces , on_delete=models.CASCADE)
@@ -213,14 +213,15 @@ def create_subscription(sender, instance, *args , **kwargs):
         profile.save()
 
 
-@receiver(pre_save , sender=SubscriptionPlan)
+@receiver(post_save , sender=SubscriptionPlan)
 def update_paid(sender, instance, *args , **kwargs):
     today = datetime.now().date()
     if instance.plan_expires_in < today:
-        instance.paid = False
         user = RecruiterProfile.objects.get(id=instance.user.user.id)
         user.paid = False
         user.save()
+        subscription = SubscriptionPlan.objects.get(id= instance.id)
+        subscription.delete()
     else:
         instance.paid = True
         user = RecruiterProfile.objects.get(id=instance.user.user.id)

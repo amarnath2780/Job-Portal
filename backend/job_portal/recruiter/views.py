@@ -13,8 +13,8 @@ from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
-from recruiter.models import Job , ShorlistedAppliedSeekers
-from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer
+from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces
+from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func
 # Create your views here.
@@ -321,3 +321,41 @@ class ShorlistedView(APIView):
 class ShortlistedAll(ModelViewSet):
     queryset = ShorlistedAppliedSeekers.objects.all()
     serializer_class = ShorlistedAppliedSeekersSerializerGET
+
+
+class PaymentView(APIView):
+
+    def post(self, request:Response):
+
+        id = request.query_params['id']
+
+        try:
+            print('try')
+            membership = MembershipsPurchaces.objects.get(user=id)
+
+            print(membership)
+
+            serializer = MembershipsPurchacesSerializer(instance=membership , data=request.data)
+
+            if serializer.is_valid():
+                print('serlizer is valid')
+                serializer.save()
+                return Response({"message":"Memebership Updated"},status=status.HTTP_200_OK)
+            else:
+                print(serializer.errors)
+                return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)    
+        except:
+
+            serializer = MembershipsPurchacesSerializer(data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message":"Memebership Created"},status=status.HTTP_200_OK)
+            else:
+                print(serializer.errors)
+                return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
