@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RecruiterProfile, Company, Application, Job , AddRequest ,Qualification , AddRequestDepartment ,AddRequestSkill
+from .models import RecruiterProfile, Company, Application, Job , AddRequest ,Qualification , AddRequestDepartment ,AddRequestSkill ,ShorlistedAppliedSeekers
 from accounts.serializers import UserViewSerializer 
 from superuser.serializers import CompanyCategorySerializer ,CompanyDepartmentSerializer 
 
@@ -66,4 +66,20 @@ class AddRequestSkillSerializer(serializers.ModelSerializer):
 class AddRequestDepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = AddRequestDepartment
+        fields = '__all__'
+
+
+class ShorlistedAppliedSeekersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ShorlistedAppliedSeekers
+        fields = '__all__'
+
+
+class ShorlistedAppliedSeekersSerializerGET(serializers.ModelSerializer):
+    seeker_id = UserViewSerializer(read_only=True ,)
+    company = CompanySerializer(read_only=True ,)
+    job_id = JobSerilizer(read_only=True ,)
+    class Meta: 
+        model = ShorlistedAppliedSeekers
         fields = '__all__'

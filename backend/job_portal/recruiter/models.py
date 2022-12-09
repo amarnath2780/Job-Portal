@@ -166,9 +166,6 @@ class AddRequestDepartment(models.Model):
 
 class ShorlistedAppliedSeekers(models.Model):
     seeker_id = models.ForeignKey(Account,on_delete=models.CASCADE)
-    recruiter_id = models.ForeignKey(RecruiterProfile ,on_delete=models.CASCADE)
+    company = models.ForeignKey(Company ,on_delete=models.CASCADE)
     job_id = models.ForeignKey(Job ,on_delete=models.CASCADE)  
-
-
-    def __str__(self):
-        return self.seeker_id.id
+    send = models.BooleanField(default = False , blank=True)

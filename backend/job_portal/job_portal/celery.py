@@ -3,6 +3,7 @@ import os
 
 from celery import Celery
 from django.conf import settings
+from celery.schedules import crontab  
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'job_portal.settings')
@@ -18,7 +19,11 @@ app.config_from_object(settings, namespace='CELERY')
 
 #CELERY BEAT SETTING
 app.conf.beat_schedule = {
-    
+    # 'send-mail-at-8AM': {
+    #     'task' : 'recruiter.task.send_mail_func',
+    #     'schedule' : crontab(hour=15, minute=10),
+    #     # 'args': ()
+    # }
 }
 
 

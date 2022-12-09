@@ -13,7 +13,8 @@ from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
-from recruiter.models import Job
+from recruiter.models import Job , ShorlistedAppliedSeekers
+from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func
 # Create your views here.
@@ -206,10 +207,16 @@ class ShortlistSeeker(APIView):
         uid = request.query_params['uid']
 
         seeker = AppliedJob.objects.get(id=id , seeker_id=uid)
+        shortlist = AppliedJob.objects.get(id=id)
         if seeker:
-            
+            ShorlistedAppliedSeekers.objects.create(
+                seeker_id = shortlist.seeker_id.seeker,
+                company = shortlist.company_id,
+                job_id = shortlist.job_id,
+            )
             seeker.is_shortlisted = True
             seeker.save()
+            
             return Response({'message': "Added to shortlist"}, status=status.HTTP_200_OK)
         else:
             return Response({'Message' : 'Data not found'} , status=status.HTTP_400_BAD_REQUEST)
@@ -288,6 +295,29 @@ class CeleryTest(APIView):
 
     def post(self ,request):
 
-        send_mail_func.delay()
+        id = request.query_params['id']
+        send_mail_func.delay(id)
 
         return Response({"Messages" : "Done"} , status=status.HTTP_200_OK)
+
+
+class ShorlistedView(APIView):
+
+    def get(self, request:Response):
+
+        try:
+            id = request.query_params['id']
+            
+            job = ShorlistedAppliedSeekers.objects.filter(job_id = id)
+            serializer = ShorlistedAppliedSeekersSerializerGET(job , many=True )
+
+            return Response(data= serializer.data , status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'Data not Found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ShortlistedAll(ModelViewSet):
+    queryset = ShorlistedAppliedSeekers.objects.all()
+    serializer_class = ShorlistedAppliedSeekersSerializerGET
