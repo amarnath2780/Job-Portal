@@ -100,7 +100,8 @@ class SubscriptionPlanSerializer(serializers.ModelSerializer):
 
 
 class MembershipsPurchacesSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = MembershipsPurchaces
         fields = '__all__'
+
+

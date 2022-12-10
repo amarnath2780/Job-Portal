@@ -13,8 +13,8 @@ from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
-from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces
-from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer
+from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces ,UserMembership
+from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func
 # Create your views here.
@@ -354,8 +354,5 @@ class PaymentView(APIView):
             else:
                 print(serializer.errors)
                 return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
-
-
-
 
 

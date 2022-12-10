@@ -10,7 +10,7 @@ from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfi
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
 from seeker.views import SearchBarFilter 
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
-from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView
+from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView 
 
 
 
