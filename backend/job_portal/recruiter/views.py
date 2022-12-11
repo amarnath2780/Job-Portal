@@ -356,3 +356,6 @@ class PaymentView(APIView):
                 return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
+class ShowAllMembership(ModelViewSet):
+    queryset = UserMembership.objects.all()
+    serializer_class = UserMembershipSerializer

@@ -10,7 +10,7 @@ from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfi
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
 from seeker.views import SearchBarFilter 
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
-from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView 
+from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView , ShowAllMembership
 
 
 
@@ -32,6 +32,7 @@ router.register(r'request-skill', ViewSkillRequest , basename='add-req-skill')
 router.register(r'request-departments', ViewDepartmentRequest , basename='add-req-department')
 router.register(r'applied-jobs', ApplyedJobsView , basename='applied-jobs-list')
 router.register(r'short-jobs', ShortlistedAll , basename='applied-jobs-list')
+router.register(r'all-membership', ShowAllMembership , basename='applied-jobs-list')
 
 
 
