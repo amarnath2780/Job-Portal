@@ -213,19 +213,19 @@ def create_subscription(sender, instance, *args , **kwargs):
         profile.save()
 
 
-@receiver(post_save , sender=SubscriptionPlan)
-def update_paid(sender, instance, *args , **kwargs):
-    today = datetime.now().date()
-    if instance.plan_expires_in < today:
-        user = RecruiterProfile.objects.get(id=instance.user.user.id)
-        user.paid = False
-        user.save()
-        subscription = SubscriptionPlan.objects.get(id= instance.id)
-        subscription.delete()
-    else:
-        instance.paid = True
-        user = RecruiterProfile.objects.get(id=instance.user.user.id)
-        user.paid = True
-        user.save()
+# @receiver(post_save , sender=SubscriptionPlan)
+# def update_paid(sender, instance, *args , **kwargs):
+#     today = datetime.now().date()
+#     if instance.plan_expires_in < today:
+#         user = RecruiterProfile.objects.get(id=instance.user.user.id)
+#         user.paid = False
+#         user.save()
+#         subscription = SubscriptionPlan.objects.get(id= instance.id)
+#         subscription.delete()
+#     else:
+#         instance.paid = True
+#         user = RecruiterProfile.objects.get(id=instance.user.user.id)
+#         user.paid = True
+#         user.save()
     
    

@@ -13,8 +13,8 @@ from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
 from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
-from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces ,UserMembership
-from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer
+from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces ,UserMembership,SubscriptionPlan
+from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer , SubscriptionPlanSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func
 # Create your views here.
@@ -359,3 +359,8 @@ class PaymentView(APIView):
 class ShowAllMembership(ModelViewSet):
     queryset = UserMembership.objects.all()
     serializer_class = UserMembershipSerializer
+
+
+class SubscriptionViewAll(ModelViewSet):
+    queryset = SubscriptionPlan.objects.all()
+    serializer_class = SubscriptionPlanSerializer

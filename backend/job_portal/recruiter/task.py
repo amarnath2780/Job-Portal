@@ -2,7 +2,8 @@ from celery import shared_task
 from accounts.models import Account 
 from django.core.mail import send_mail
 from job_portal import settings
-from recruiter.models import ShorlistedAppliedSeekers
+from datetime import datetime
+from recruiter.models import ShorlistedAppliedSeekers , SubscriptionPlan,RecruiterProfile
 
 @shared_task(bind=True)
 def test_func(self):
@@ -34,4 +35,26 @@ def send_mail_func(self,id):
         user.send = True
         user.save()
     
+    return 'Done'
+
+
+@shared_task(bind=True)
+def update_paid(self):
+    
+    instance = SubscriptionPlan.objects.all()
+
+    today = datetime.now().date()
+
+    for sub in instance:
+        if sub.plan_expires_in < today:
+            user = RecruiterProfile.objects.get(id=sub.user.user.id)
+            user.paid = False
+            user.save()
+            instance.delete()
+        else:
+            sub.paid = True
+            user = RecruiterProfile.objects.get(id=sub.user.user.id)
+            user.paid = True
+            user.save()
+
     return 'Done'
