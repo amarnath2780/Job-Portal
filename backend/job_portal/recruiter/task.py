@@ -51,6 +51,22 @@ def update_paid(self):
             user.paid = False
             user.save()
             instance.delete()
+
+            to_email = sub.user.user.recruiter.email
+
+            print(to_email)
+
+            mail_subject = f"Mr. {sub.user.user.recruiter.first_name} , You plan is Expired"
+            message =  f"Hey {sub.user.user.recruiter.first_name} ,  We are Sending this Email to inform you that your Subscription Plan is Expired Please Try to Extend the Plan for enjoying all the Features "
+
+            send_mail(
+                subject=mail_subject,
+                message=message,
+                from_email= settings.EMAIL_HOST_USER,
+                recipient_list=[to_email],
+                fail_silently=True,
+            )
+
         else:
             sub.paid = True
             user = RecruiterProfile.objects.get(id=sub.user.user.id)
@@ -80,6 +96,5 @@ def send_reminder_mail(self):
             recipient_list=[to_email],
             fail_silently=True,
         )
-        print(f'mail send {to_email}')
     
     return 'Done'
