@@ -23,7 +23,13 @@ app.conf.beat_schedule = {
     'task' : 'recruiter.task.update_paid',
     'schedule' : crontab(hour=0 , minute=1),
     # 'args' : ()
-   } 
+   } ,
+
+   'send-reminder' : {
+    'task' : 'recruiter.task.send_reminder_mail',
+    'schedule' : crontab(hour=0 , minute=0, day_of_week='monday'),
+   }
+
 }
 
 

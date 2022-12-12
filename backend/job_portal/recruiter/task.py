@@ -58,3 +58,28 @@ def update_paid(self):
             user.save()
 
     return 'Done'
+
+@shared_task(bind=True)
+def send_reminder_mail(self):
+
+    users = Account.objects.filter(role = 'seeker')
+
+    for user in users:
+        print(user)
+        mail_subject = f"How Are you  {user.first_name}"
+        message =  f"Hey {user.first_name} ,  In TrabaJo many new jobs are added by new recruiters please check and apply and upgrade you life to a next level get better salary and a better life style we support for that. Thank You...... "
+
+        to_email = user.email
+
+        print(to_email)
+
+        send_mail(
+            subject=mail_subject,
+            message=message,
+            from_email= settings.EMAIL_HOST_USER,
+            recipient_list=[to_email],
+            fail_silently=True,
+        )
+        print(f'mail send {to_email}')
+    
+    return 'Done'
