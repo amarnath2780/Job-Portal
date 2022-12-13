@@ -213,19 +213,16 @@ def create_subscription(sender, instance, *args , **kwargs):
         profile.save()
 
 
-# @receiver(post_save , sender=SubscriptionPlan)
-# def update_paid(sender, instance, *args , **kwargs):
-#     today = datetime.now().date()
-#     if instance.plan_expires_in < today:
-#         user = RecruiterProfile.objects.get(id=instance.user.user.id)
-#         user.paid = False
-#         user.save()
-#         subscription = SubscriptionPlan.objects.get(id= instance.id)
-#         subscription.delete()
-#     else:
-#         instance.paid = True
-#         user = RecruiterProfile.objects.get(id=instance.user.user.id)
-#         user.paid = True
-#         user.save()
+class OfferLetter(models.Model):
+    user = models.ForeignKey(Account , on_delete=models.CASCADE)
+    job = models.ForeignKey(Job , on_delete=models.CASCADE)
+    recruiter = models.ForeignKey(RecruiterProfile , on_delete=models.CASCADE)
+    salary = models.CharField(max_length=500)
+    join_data = models.CharField(max_length=400)
+    position = models.CharField(max_length=300)
+
+
+    def __str__(self):
+        return self.user.first_name
     
    
