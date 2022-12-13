@@ -15,6 +15,7 @@ from seeker.serializers import AppliedJobsSerizlizer
 from seeker.models import AppliedJob
 from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces ,UserMembership,SubscriptionPlan
 from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer , SubscriptionPlanSerializer
+from recruiter.serializers import OfferLetterSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func
 # Create your views here.
@@ -33,6 +34,15 @@ class CompanyView(ModelViewSet):
 class ApplyedJobsView(ModelViewSet):
     queryset = AppliedJob.objects.all()
     serializer_class = AppliedJobsSerizlizer
+
+class ShowAllMembership(ModelViewSet):
+    queryset = UserMembership.objects.all()
+    serializer_class = UserMembershipSerializer
+
+
+class SubscriptionViewAll(ModelViewSet):
+    queryset = SubscriptionPlan.objects.all()
+    serializer_class = SubscriptionPlanSerializer
 
 
 class CompanyAddView(APIView):
@@ -356,11 +366,17 @@ class PaymentView(APIView):
                 return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
-class ShowAllMembership(ModelViewSet):
-    queryset = UserMembership.objects.all()
-    serializer_class = UserMembershipSerializer
+class SendOfferLetterView(APIView):
 
+    def post(self, request:Response):
+        
+        serializer = OfferLetterSerializer(data=request.data)
 
-class SubscriptionViewAll(ModelViewSet):
-    queryset = SubscriptionPlan.objects.all()
-    serializer_class = SubscriptionPlanSerializer
+        if serializer.is_valid():
+            print('serlizer is valid')
+            serializer.save()
+            print(serializer.data)
+            return Response({"message" : "Offer Letter Send"}, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)

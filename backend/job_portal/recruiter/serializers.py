@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import RecruiterProfile, Company, Application, Job , AddRequest ,Qualification , AddRequestDepartment ,AddRequestSkill ,ShorlistedAppliedSeekers
 from accounts.serializers import UserViewSerializer 
 from superuser.serializers import CompanyCategorySerializer ,CompanyDepartmentSerializer 
-from .models import UserMembership,SubscriptionPlan,MembershipsPurchaces
+from .models import UserMembership,SubscriptionPlan,MembershipsPurchaces ,OfferLetter
 
 class RecruiterProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -105,3 +105,8 @@ class MembershipsPurchacesSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+class OfferLetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OfferLetter
+        fields = '__all__'
