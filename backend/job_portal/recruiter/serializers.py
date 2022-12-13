@@ -107,6 +107,7 @@ class MembershipsPurchacesSerializer(serializers.ModelSerializer):
 
 
 class OfferLetterSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = OfferLetter
         fields = '__all__'

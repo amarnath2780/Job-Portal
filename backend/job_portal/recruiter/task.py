@@ -3,7 +3,8 @@ from accounts.models import Account
 from django.core.mail import send_mail
 from job_portal import settings
 from datetime import datetime
-from recruiter.models import ShorlistedAppliedSeekers , SubscriptionPlan,RecruiterProfile
+from django.template.loader import render_to_string
+from recruiter.models import ShorlistedAppliedSeekers , SubscriptionPlan,RecruiterProfile ,Job
 
 @shared_task(bind=True)
 def test_func(self):
@@ -98,3 +99,35 @@ def send_reminder_mail(self):
         )
     
     return 'Done'
+
+
+@shared_task(bind=True)
+def send_offer_letter(self, user,recruiter,job,salary,join_data,position):
+
+    seeker = Account.objects.get(id = user)
+    recruiter = RecruiterProfile.objects.get(id= recruiter)
+    jobs = Job.objects.get(id=job)
+    date = datetime.now().date()
+
+    mail_subject = f"You are Seleted For {seeker.first_name}"
+    message      = render_to_string('authentication/activate.html',{
+        'seeker' : seeker,
+        'recruiter':recruiter,
+        'salary':salary,
+        'position':position,
+        'join_data':join_data,
+        'date':date,
+        'job' : jobs,
+        })
+
+    to_email = seeker.email
+
+    print(to_email)
+
+    send_mail(
+        subject=mail_subject,
+        message=message,
+        from_email= settings.EMAIL_HOST_USER,
+        recipient_list=[to_email],
+        fail_silently=True,
+    )

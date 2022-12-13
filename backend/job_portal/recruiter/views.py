@@ -17,7 +17,7 @@ from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchac
 from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer , SubscriptionPlanSerializer
 from recruiter.serializers import OfferLetterSerializer
 from rest_framework.decorators import api_view, permission_classes
-from .task import test_func, send_mail_func
+from .task import test_func, send_mail_func ,send_offer_letter
 # Create your views here.
 
 
@@ -375,7 +375,13 @@ class SendOfferLetterView(APIView):
         if serializer.is_valid():
             print('serlizer is valid')
             serializer.save()
-            print(serializer.data)
+            user = serializer.data.get('user')
+            recruiter = serializer.data.get('recruiter')
+            job = serializer.data.get('job')
+            salary = serializer.data.get('salary')
+            join_data = serializer.data.get('join_data')
+            position = serializer.data.get('position')
+            send_offer_letter.delay(user,recruiter,job,salary,join_data,position)
             return Response({"message" : "Offer Letter Send"}, status=status.HTTP_200_OK)
         else:
             print(serializer.errors)
