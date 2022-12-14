@@ -11,7 +11,7 @@ from superuser.views import AddRequestDepartmentView , AddRequestSkillView , Vie
 from seeker.views import SearchBarFilter 
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
 from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView , ShowAllMembership,SubscriptionViewAll
-from recruiter.views import SendOfferLetterView
+from recruiter.views import SendOfferLetterView 
 
 
 router = routers.DefaultRouter()

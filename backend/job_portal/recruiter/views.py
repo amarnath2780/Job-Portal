@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from accounts.models import Account
 from .models import Company, RecruiterProfile, Application
-from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer , AddRequestSerializer , RecruiterProfileSerializerGet
+from .serializers import CompanySerializer, RecruiterProfileSerializer, ApplicationSerializer  , JobSerilizer ,JobSerilizerPOST , AddRequestSerializer , RecruiterProfileSerializerGet
 from rest_framework import status
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
@@ -11,11 +11,11 @@ from rest_framework.views import APIView
 from superuser.models import CompanyCategory
 from superuser.serializers import CompanyCategorySerializer
 from .serializers import AddRequestSkillSerializer ,AddRequestDepartmentSerializer
-from seeker.serializers import AppliedJobsSerizlizer
+from seeker.serializers import AppliedJobsSerizlizer ,AppliedJobsSerizlizerPost
 from seeker.models import AppliedJob
 from recruiter.models import Job , ShorlistedAppliedSeekers , MembershipsPurchaces ,UserMembership,SubscriptionPlan
 from recruiter.serializers import ShorlistedAppliedSeekersSerializerGET ,ShorlistedAppliedSeekersSerializer ,MembershipsPurchacesSerializer ,UserMembershipSerializer , SubscriptionPlanSerializer
-from recruiter.serializers import OfferLetterSerializer
+from recruiter.serializers import OfferLetterSerializer 
 from rest_framework.decorators import api_view, permission_classes
 from .task import test_func, send_mail_func ,send_offer_letter
 # Create your views here.
@@ -123,8 +123,8 @@ class PostJob(APIView):
 
     def post(self, request:Response):
         
-        serializer = JobSerilizer(data=request.data)
-
+        serializer = JobSerilizerPOST(data=request.data)    
+        print(request.data)
         if serializer.is_valid():
             print('serilalizer is valid')
             serializer.save()
@@ -257,7 +257,7 @@ class PostedJobListView(APIView):
         try:
             id = request.query_params['id']
 
-            jobs = Job.objects.filter(recruiter=id)
+            jobs = Job.objects.filter(recruiter_id=id)
             serializer = JobSerilizer(jobs , many=True)
 
             return Response(data= serializer.data , status=status.HTTP_200_OK)
@@ -372,17 +372,22 @@ class SendOfferLetterView(APIView):
         
         serializer = OfferLetterSerializer(data=request.data)
 
+        email = request.data.get('user')
+        users = Account.objects.get(email=email)
+
+        request.data['user'] = users.id
+
         if serializer.is_valid():
-            print('serlizer is valid')
             serializer.save()
-            user = serializer.data.get('user')
+
             recruiter = serializer.data.get('recruiter')
             job = serializer.data.get('job')
             salary = serializer.data.get('salary')
             join_data = serializer.data.get('join_data')
             position = serializer.data.get('position')
-            send_offer_letter.delay(user,recruiter,job,salary,join_data,position)
+            send_offer_letter.delay(users.id,recruiter,job,salary,join_data,position)
             return Response({"message" : "Offer Letter Send"}, status=status.HTTP_200_OK)
         else:
             print(serializer.errors)
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+

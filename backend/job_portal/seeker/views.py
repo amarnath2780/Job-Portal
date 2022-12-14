@@ -29,12 +29,12 @@ class ViewJobSingle(APIView):
         id = request.query_params['id']
         print(id)
           
-        job = Job.objects.get(id=id)
-
-        serializer = JobSerilizer(job, many=False)
-
-        return Response(data=serializer.data,status=status.HTTP_200_OK)
-
+        try:
+            job = Job.objects.get(id=id)
+            serializer = JobSerilizer(job, many=False)  
+            return Response(data=serializer.data,status=status.HTTP_200_OK)
+        except:
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
 
 
 
