@@ -102,6 +102,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+<<<<<<< Updated upstream
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -118,7 +119,25 @@ DATABASES={
       'HOST':'localhost',
       'PORT':'',
    }
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+>>>>>>> Stashed changes
 }
+
+# DATABASES={
+#    'default':{
+#       'ENGINE':'django.db.backends.postgresql_psycopg2',
+#       'NAME':'trabajo',
+#       'USER':'postgres',
+#       'PASSWORD':'kali2780',
+#       'HOST':'localhost',
+#       'PORT':'5000',
+#    }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -166,17 +185,17 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
 CORS_ORIGIN_ALLOW_ALL = True
 APPEND_SLASH=False
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'http://localhost:8080',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'http://localhost:8000',
+#     'http://localhost:8080',
+# ]
 
 
 
