@@ -102,23 +102,23 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES={
-   'default':{
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'myproject',
-      'USER':'myprojectuser',
-      'PASSWORD':'kali2780',
-      'HOST':'localhost',
-      'PORT':'',
-   }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# DATABASES={
+#    'default':{
+#       'ENGINE':'django.db.backends.postgresql_psycopg2',
+#       'NAME':'myproject',
+#       'USER':'myprojectuser',
+#       'PASSWORD':'kali2780',
+#       'HOST':'localhost',
+#       'PORT':'',
+#    }
+# }
 
 # DATABASES={
 #    'default':{
@@ -244,7 +244,7 @@ SIMPLE_JWT = {
 
 
 TWILIO_ACCOUNT_SID = 'AC88d1b4e0e16cd6bb345b62a6148060bb'
-TWILIO_AUTH_TOKEN = 'e780a2dfbe4e0e3017f96a20c1c2ddd0'
+TWILIO_AUTH_TOKEN = 'fda663fa12dc1a61a2c46f9fc1303f2e'
 TWILIO_SERVICE_SID= 'VA4840bc38f8b8963adc0d7ae1519b3443'
 
 
