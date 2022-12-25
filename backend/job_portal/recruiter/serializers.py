@@ -75,7 +75,6 @@ class AddRequestDepartmentSerializer(serializers.ModelSerializer):
 
 
 class ShorlistedAppliedSeekersSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ShorlistedAppliedSeekers
         fields = '__all__'

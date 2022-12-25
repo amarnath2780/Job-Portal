@@ -8,7 +8,7 @@ from superuser.views import EditSkill , EditCategory, EditDepartment ,DeleteDepa
 from recruiter.views import PostJob , RequestCatAddView , RecruiterProfileDetails ,RequestSkillAddView ,RequestDepartmentAddView ,ShortlistSeeker
 from seeker.views import ViewAllJobs , ViewJobSingle , UpdateProfile , ViewProfile , UserDetails, ApplyJob ,JobFilerView
 from superuser.views import AddRequestDepartmentView , AddRequestSkillView , ViewSkillRequest , ViewDepartmentRequest ,BannerImageView
-from seeker.views import SearchBarFilter ,AppliedJobByMe
+from seeker.views import SearchBarFilter ,AppliedJobByMe,ChangeAppliedJobStatus
 from recruiter.views import ApplyedJobsView , JobAppliedSeekerView , PostedJobListView , AppliedJobSingleJob , DeclineJobRequestView ,RecruiterUpdateProfile
 from recruiter.views import CeleryTest , ShorlistedView ,ShortlistedAll , PaymentView , ShowAllMembership,SubscriptionViewAll
 from recruiter.views import SendOfferLetterView 
@@ -83,6 +83,7 @@ urlpatterns = [
     path('payment/',  PaymentView.as_view() , name='shortlisted'),
     path('offer-letter/',  SendOfferLetterView.as_view() , name='offer-letter'),
     path('applied-by-me/',  AppliedJobByMe.as_view() , name='offer-letter'),
+    path('change-job-status/',  ChangeAppliedJobStatus.as_view() , name='offer-letter'),
 ]
 
 urlpatterns += router.urls

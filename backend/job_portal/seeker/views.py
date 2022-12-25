@@ -2,8 +2,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import SeekerProfile , Notificaiton,AppliedJob
 from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost, AppliedJobsSerizlizerPostGet ,SeekerProfileSerializerGet 
-from recruiter.models import Job ,RecruiterProfile
-from recruiter.serializers import JobSerilizer
+from recruiter.models import Job ,RecruiterProfile , ShorlistedAppliedSeekers
+from recruiter.serializers import JobSerilizer , ShorlistedAppliedSeekersSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import FileUploadParser , MultiPartParser ,FormParser
@@ -11,7 +11,7 @@ from accounts.models import Account
 from accounts.serializers import UserViewSerializer
 from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
-from .filter import JobFilter
+from .filter import JobFilter 
 from rest_framework import filters
 
 # Create your views here.
@@ -164,6 +164,20 @@ class AppliedJobByMe(APIView):
 
 class ChangeAppliedJobStatus(APIView):
 
-    def post(self, requset:Response):
+    def put(self, request:Response):
 
-        serializer = AppliedJobsSerizlizerPost
+        id = request.query_params['id']
+
+        try:
+            job = ShorlistedAppliedSeekers(id=id)
+            change = ShorlistedAppliedSeekersSerializer(instance=job, data=request.data)
+
+
+            if change.is_valid():
+                print('chnage is valid')
+                change.save()
+                return Response({"message":"changed the data"},status=status.HTTP_200_OK)
+
+        except:
+            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
