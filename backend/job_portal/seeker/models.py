@@ -27,12 +27,6 @@ class SeekerProfile(models.Model):
 
 class AppliedJob(models.Model):
 
-    STATUS = [
-        ('Shortlised' , 'Shortlised'),
-        ('Tech-Interview' ,'Tech-Interview'),
-        ('HR-Round','HR-Round')
-    ]
-
     job_id = models.ForeignKey(Job ,on_delete=models.CASCADE)
     recruiter_id = models.ForeignKey(Account ,on_delete=models.CASCADE)
     seeker_id = models.ForeignKey(SeekerProfile ,on_delete=models.CASCADE)
@@ -43,7 +37,6 @@ class AppliedJob(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     phone = models.CharField(max_length=20)
-    status = models.CharField(default = 'Shortlised' ,choices=STATUS , max_length=200 ,blank=True )
     is_shortlisted = models.BooleanField(default=False , blank=True)
     is_decline = models.BooleanField(default=False , blank=True)
     is_applied = models.BooleanField(default=True , blank=True)

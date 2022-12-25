@@ -170,9 +170,15 @@ class AddRequestDepartment(models.Model):
         return self.department_name
 
 class ShorlistedAppliedSeekers(models.Model):
+    STATUS = [
+        ('Shortlised' , 'Shortlised'),
+        ('Tech-Interview' ,'Tech-Interview'),
+        ('HR-Round','HR-Round')
+    ]
     seeker_id = models.ForeignKey(Account,on_delete=models.CASCADE)
     company = models.ForeignKey(Company ,on_delete=models.CASCADE)
-    job_id = models.ForeignKey(Job ,on_delete=models.CASCADE)  
+    job_id = models.ForeignKey(Job ,on_delete=models.CASCADE) 
+    status = models.CharField(default = 'Shortlised' ,choices=STATUS , max_length=200 ,blank=True ) 
     send = models.BooleanField(default = False , blank=True)
 
 

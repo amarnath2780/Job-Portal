@@ -156,7 +156,14 @@ class AppliedJobByMe(APIView):
             serializer = AppliedJobsSerizlizerPostGet(job , many=True)
 
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-            
+
         except:
             print('data not found')
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangeAppliedJobStatus(APIView):
+
+    def post(self, requset:Response):
+
+        serializer = AppliedJobsSerizlizerPost
