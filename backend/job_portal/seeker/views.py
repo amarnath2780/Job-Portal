@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from .models import SeekerProfile , Notificaiton
+from .models import SeekerProfile , Notificaiton,AppliedJob
 from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost ,SeekerProfileSerializerGet 
 from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
@@ -141,3 +141,21 @@ class SearchBarFilter(ListAPIView):
     serializer_class = JobSerilizer
     filter_backends = [filters.SearchFilter]
     search_fields = ['^job_title']
+
+
+
+class AppliedJobByMe(APIView):
+
+    def get(self, request:Response):
+
+        try:
+            id = request.query_params['id']
+
+            job = AppliedJob.objects.filter(seeker_id=id)
+
+            serializer = AppliedJobsSerizlizerPost(job , many=True)
+
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except:
+            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
