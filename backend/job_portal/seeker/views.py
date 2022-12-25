@@ -164,19 +164,21 @@ class AppliedJobByMe(APIView):
 
 class ChangeAppliedJobStatus(APIView):
 
-    def put(self, request:Response):
+    def post(self, request:Response):
 
         id = request.query_params['id']
 
         try:
             job = ShorlistedAppliedSeekers(id=id)
-            change = ShorlistedAppliedSeekersSerializer(instance=job, data=request.data)
+            job_status = request.data.get('status')
 
+            if job:
 
-            if change.is_valid():
-                print('chnage is valid')
-                change.save()
+                job.status = job_status
+
+                job.save()
                 return Response({"message":"changed the data"},status=status.HTTP_200_OK)
+
 
         except:
             print('data not found')
