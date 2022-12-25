@@ -169,20 +169,15 @@ class ChangeAppliedJobStatus(APIView):
         id = request.query_params['id']
 
         try:
-            job = ShorlistedAppliedSeekers(id=id)
-            job_status = request.data.get('status')
-            change = ShorlistedAppliedSeekersSerializer(job, many=False)
-
-            if change.is_valid():
-
-                job.status = job_status
-
-                change.save()
-
-
-                return Response({"message":"changed the data"},status=status.HTTP_200_OK)
-
-
+            job = ShorlistedAppliedSeekers.objects.get(id=id)
         except:
-            print('data not found')
+            return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = ShorlistedAppliedSeekersSerializer(job , data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({'Message':'Status Changed Successfully'} , status=status.HTTP_200_OK)
+        else:
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
