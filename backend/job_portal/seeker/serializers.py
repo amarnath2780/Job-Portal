@@ -27,6 +27,13 @@ class AppliedJobsSerizlizerPost(serializers.ModelSerializer):
         model = AppliedJob
         fields = '__all__'
 
+
+class AppliedJobsSerizlizerPostGet(serializers.ModelSerializer):
+    job_id = JobSerilizer(read_only=True)
+    class Meta:
+        model = AppliedJob
+        fields = '__all__'
+
 class SeekerProfileSerializerGet(serializers.ModelSerializer):
     seeker = UserViewSerializer(read_only = True , many=False)
     category = CompanyCategorySerializer(read_only = True , many=False)

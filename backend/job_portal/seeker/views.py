@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import SeekerProfile , Notificaiton,AppliedJob
-from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost ,SeekerProfileSerializerGet 
+from .serializers import SeekerProfileSerializer  , AppliedJobsSerizlizer,AppliedJobsSerizlizerPost, AppliedJobsSerizlizerPostGet ,SeekerProfileSerializerGet 
 from recruiter.models import Job ,RecruiterProfile
 from recruiter.serializers import JobSerilizer
 from rest_framework.response import Response
@@ -153,9 +153,10 @@ class AppliedJobByMe(APIView):
 
             job = AppliedJob.objects.filter(seeker_id=id)
 
-            serializer = AppliedJobsSerizlizerPost(job , many=True)
+            serializer = AppliedJobsSerizlizerPostGet(job , many=True)
 
             return Response(data=serializer.data, status=status.HTTP_200_OK)
+            
         except:
             print('data not found')
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
