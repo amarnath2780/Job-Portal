@@ -174,10 +174,14 @@ class ChangeAppliedJobStatus(APIView):
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
         
         serializer = ShorlistedAppliedSeekersSerializer(job , data=request.data)
+        seeker_id = request.data.get('seeker_id')
 
+        seeker = Account.objects.get(email =seeker_id)
+        request.data['seeker_id'] = seeker.id
         if serializer.is_valid():
             serializer.save()
 
             return Response({'Message':'Status Changed Successfully'} , status=status.HTTP_200_OK)
         else:
+            print(serializer.errors)
             return Response({'message' : 'data not found'} , status=status.HTTP_400_BAD_REQUEST)
